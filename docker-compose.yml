@@ -3,14 +3,17 @@ version: '3.8'
 services:
   triton:
     image: nvcr.io/nvidia/tritonserver:23.01-py3
-    environment:
-      - MODEL_REPOSITORY=/models
+    expose:
+      - 8000
+      - 8001
+      - 8002
     volumes:
       - ./model_repository:/models
-    ports:
-      #- "8000:8000"
-      - "8001:8001"
-      - "8002:8002"
+    environment:
+      - MODEL_REPOSITORY=/models
+    restart: always
+    networks:
+      - backend
     deploy:
       resources:
         limits:
@@ -21,6 +24,62 @@ services:
               count: all
               capabilities: [ gpu ]
     command: ["tritonserver", "--model-repository=/models"]
+
+  db:
+    image: postgres:15-alpine
+    container_name: postgres
+    expose:
+      - 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    depends_on:
+      - triton
+    restart: always
+    networks:
+      - backend
+
+  redis:
+    image: redis:7.0.15
+    container_name: redis
+    expose:
+      - 6379
+    volumes:
+      - redis-master-data:/data
+    restart: always
+    networks:
+      - backend
+
+  api:
+    image: shop-service:latest
+    build:
+      context: ./service
+      dockerfile: Dockerfile
+      target: build
+    shm_size: 1g
+    expose:
+      - 8000
+    volumes:
+      - static_volume:/home/app/web/static
+    environment:
+      - API_URL
+      - API_PORT
+      - POSTGRES_HOST
+      - POSTGRES_PORT
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    depends_on:
+      - db
+      - redis
+      - redis-slave
+    restart: always
+    networks:
+      - frontend
+      - backend
 
   prometheus:
     image: prom/prometheus:latest
@@ -41,5 +100,31 @@ services:
     volumes:
       - grafana-data:/var/lib/grafana
 
+  nginx:
+    image: shop-service-router:latest
+    build: ./nginx/
+    container_name: nginx
+    volumes:
+      - static_volume:/home/app/web/static
+    ports:
+      - 80:80
+    depends_on:
+      - api
+      - grafana
+    restart: always
+    networks:
+      - frontend
+
 volumes:
   grafana-data:
+  postgres_data:
+  static_volume:
+  media_volume:
+  redis-master-data:
+  redis-slave-data:
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
