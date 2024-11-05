@@ -17,7 +17,8 @@ services:
     deploy:
       resources:
         limits:
-          memory: 4g
+          memory: "4g"
+          cpus: "2.0"
         reservations:
           devices:
             - driver: nvidia
@@ -41,6 +42,14 @@ services:
     restart: always
     networks:
       - backend
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+        reservations:
+          cpus: "0.25"
+          memory: "256M"
 
   redis:
     image: redis:7.0.15
@@ -48,10 +57,18 @@ services:
     expose:
       - 6379
     volumes:
-      - redis-master-data:/data
+      - redis-data:/data
     restart: always
     networks:
       - backend
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "256M"
+        reservations:
+          cpus: "0.1"
+          memory: "128M"
 
   api:
     image: shop-service:latest
@@ -59,7 +76,6 @@ services:
       context: ./service
       dockerfile: Dockerfile
       target: build
-    shm_size: 1g
     expose:
       - 8000
     volumes:
@@ -80,18 +96,37 @@ services:
     networks:
       - frontend
       - backend
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "1024M"
+        reservations:
+          cpus: "0.5"
+          memory: "512M"
 
   prometheus:
     image: prom/prometheus:latest
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-    ports:
-      - "9090:9090"
+    expose:
+      - 9090
+    restart: always
+    networks:
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+        reservations:
+          cpus: "0.25"
+          memory: "256M"
 
   grafana:
     image: grafana/grafana:latest
-    ports:
-      - "3000:3000"
+    expose:
+      - 3000
     depends_on:
       - prometheus
     environment:
@@ -99,6 +134,18 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
     volumes:
       - grafana-data:/var/lib/grafana
+    restart: always
+    networks:
+      - frontend
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+        reservations:
+          cpus: "0.25"
+          memory: "256M"
 
   nginx:
     image: shop-service-router:latest
@@ -114,14 +161,21 @@ services:
     restart: always
     networks:
       - frontend
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "256M"
+        reservations:
+          cpus: "0.1"
+          memory: "128M"
 
 volumes:
   grafana-data:
   postgres_data:
   static_volume:
   media_volume:
-  redis-master-data:
-  redis-slave-data:
+  redis-data:
 
 networks:
   frontend:
