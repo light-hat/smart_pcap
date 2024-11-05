@@ -10,7 +10,7 @@ services:
     volumes:
       - ./model_repository:/models
     environment:
-      - MODEL_REPOSITORY=/models
+      - MODEL_REPOSITORY
     restart: always
     networks:
       - backend
@@ -71,15 +71,16 @@ services:
           memory: "128M"
 
   api:
-    image: shop-service:latest
+    image: smart-ids:latest
     build:
-      context: ./service
+      context: ./api
       dockerfile: Dockerfile
-      target: build
+      target: app
     expose:
       - 8000
     volumes:
       - static_volume:/home/app/web/static
+      - media_volume:/home/app/web/media
     environment:
       - API_URL
       - API_PORT
@@ -94,6 +95,39 @@ services:
     restart: always
     networks:
       - frontend
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "1024M"
+        reservations:
+          cpus: "0.5"
+          memory: "512M"
+
+  worker:
+    image: smart-ids-worker:latest
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      target: worker
+    volumes:
+      - static_volume:/home/app/web/static
+      - media_volume:/home/app/web/media
+    environment:
+      - API_URL
+      - API_PORT
+      - POSTGRES_HOST
+      - POSTGRES_PORT
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    depends_on:
+      - db
+      - redis
+      - api
+    restart: always
+    networks:
       - backend
     deploy:
       resources:
@@ -129,8 +163,8 @@ services:
     depends_on:
       - prometheus
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD
+      - GF_SECURITY_ADMIN_USER
     volumes:
       - grafana-data:/var/lib/grafana
     restart: always
@@ -147,11 +181,12 @@ services:
           memory: "256M"
 
   nginx:
-    image: shop-service-router:latest
+    image: smart-ids-router:latest
     build: ./nginx/
     container_name: nginx
     volumes:
       - static_volume:/home/app/web/static
+      - media_volume:/home/app/web/media
     ports:
       - 80:80
     depends_on:

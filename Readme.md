@@ -149,6 +149,7 @@ cd smart_ids
 В корне репозитория создайте `.env` файл со следующим содержимым:
 
 ```
+MODEL_REPOSITORY=/models
 API_URL=127.0.0.1
 API_PORT=80
 POSTGRES_HOST=db
@@ -156,9 +157,13 @@ POSTGRES_PORT=5432
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 POSTGRES_DB=shop_database
+GF_SECURITY_ADMIN_PASSWORD=admin
+GF_SECURITY_ADMIN_USER=admin
 ```
 
 Переменные окружения в конфигурации:
+
+- `MODEL_REPOSITORY`: путь к папке моделей в контейнере Triton (рекомендуется оставить значение по умолчанию);
 
 - `API_URL`: адрес, на котором будет развёрнут сервис;
 
@@ -172,7 +177,11 @@ POSTGRES_DB=shop_database
 
 - `POSTGRES_PASSWORD`: пароль от базы данных;
 
-- `POSTGRES_DB`: имя базы данных, используемой сервисом.
+- `POSTGRES_DB`: имя базы данных, используемой сервисом;
+
+- `GF_SECURITY_ADMIN_PASSWORD`: имя пользователя для авторизации в Grafana;
+
+- `GF_SECURITY_ADMIN_USER`: пароль для авторизации в Grafana.
 
 ### Запуск проекта
 
