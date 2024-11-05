@@ -1,0 +1,4 @@
+migrations/
+static/
+media/
+venv/

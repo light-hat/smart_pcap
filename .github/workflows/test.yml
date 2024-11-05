@@ -1,0 +1,31 @@
+name: Unit testing
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.12]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Dependencies
+        run: |
+          cd api
+          pip install -r requirements.txt
+          pip install pytest-django
+          python3 manage.py makemigrations --settings=config.unittest --noinput
+          python3 manage.py migrate --settings=config.unittest --noinput
+          DJANGO_SETTINGS_MODULE=config.unittest pytest

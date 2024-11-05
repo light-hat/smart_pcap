@@ -1,0 +1,9 @@
+__pycache__
+*.db
+env/
+media/
+venv/
+.DS_Store
+.pycache/
+db.sqlite3
+db.sqlite3-journal

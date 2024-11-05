@@ -191,6 +191,26 @@ GF_SECURITY_ADMIN_USER=admin
 docker-compose up -d --build
 ```
 
+<details>
+  <summary>Что примерно должно быть в ответе</summary>
+
+`TODO`: Указать лог, когда починю Triton Inference Server
+
+</details>
+
+<details>
+  <summary>Как выглядит здоровый лог при запуске</summary>
+
+Для просмотра логов стека приложений выполните следующую команду:
+
+```shell
+docker-compose logs
+```
+
+`TODO`: Указать лог, когда закончу всё
+
+</details>
+
 ## Эксплуатация
 
 ### Схема работы
