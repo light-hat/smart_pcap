@@ -14,10 +14,16 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-FROM base AS build
+FROM base AS app
 
 RUN chmod +x entrypoint.sh
 
 RUN python manage.py collectstatic --noinput
 
 ENTRYPOINT ["sh", "./entrypoint.sh"]
+
+FROM base AS worker
+
+RUN python manage.py collectstatic --noinput
+
+CMD ["celery", "-A", "config", "worker", "--loglevel=info"]

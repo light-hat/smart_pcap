@@ -1,5 +1,5 @@
 """
-Настройки Django для основного проекта.
+Настройки Django для модульного тестирования.
 """
 
 import os
@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = get_random_secret_key()
 
-DEBUG = False
+DEBUG = True
 
 HOST = environ.get("API_URL")
 
@@ -88,12 +88,8 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": environ.get("POSTGRES_DB"),
-        "USER": environ.get("POSTGRES_USER"),
-        "PASSWORD": environ.get("POSTGRES_PASSWORD"),
-        "HOST": environ.get("POSTGRES_HOST"),
-        "PORT": environ.get("POSTGRES_PORT", "5432"),
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "test_database.sqlite3",
     }
 }
 
@@ -128,9 +124,3 @@ MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-CELERY_BROKER_URL = 'redis://redis:6379'
-CELERY_RESULT_BACKEND = 'redis://redis:6379'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TASK_SERIALIZER = 'json'

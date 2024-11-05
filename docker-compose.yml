@@ -91,7 +91,6 @@ services:
     depends_on:
       - db
       - redis
-      - redis-slave
     restart: always
     networks:
       - frontend
