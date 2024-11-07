@@ -1,13 +1,29 @@
 <h1 align="center"> Smart IDS </h1>
 
 <p align="center">
-<a href="https://github.com/light-hat/shop_service/actions"><img alt="Unit test status" src="https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat&logo=python&logoColor=white"></a>
+<a href="https://github.com/light-hat/smart_ids/actions"><img alt="Unit test status" src="https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat&logo=python&logoColor=white"></a>
+<a href="https://github.com/light-hat/smart_ids/actions"><img alt="Unit test status" src="https://github.com/light-hat/smart_ids/workflows/Unit%20testing/badge.svg"></a>
+<a href="https://github.com/light-hat/smart_ids/actions"><img alt="Pylint status" src="https://github.com/light-hat/smart_ids/workflows/Pylint/badge.svg"></a>
+<a href="https://github.com/light-hat/smart_ids/actions"><img alt="Bandit SAST status" src="https://github.com/light-hat/smart_ids/workflows/SAST/badge.svg"></a>
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 </p>
 
 <p align="center">
 Асинхронный API для обнаружения атак в дампах сетевого трафика методами машинного обучения.
 </p>
+
+## Стек
+
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)
+![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
+![Celery](https://img.shields.io/badge/celery-%23a9cc54.svg?style=for-the-badge&logo=celery&logoColor=ddf4a4)
+![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+![Grafana](https://img.shields.io/badge/grafana-%23F46800.svg?style=for-the-badge&logo=grafana&logoColor=white)
+![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=Prometheus&logoColor=white)
+![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
 ## Содержание
 
@@ -69,7 +85,7 @@ docker --version
 ```
 
 <details>
-  <summary>Что примерно должно быть в ответе</summary>
+  <summary>👀 Что примерно должно быть в ответе</summary>
 
 ```
 Docker version 27.2.0, build 3ab4256
@@ -84,7 +100,7 @@ docker-compose --version
 ```
 
 <details>
-  <summary>Что примерно должно быть в ответе</summary>
+  <summary>👀 Что примерно должно быть в ответе</summary>
 
 ```
 Docker Compose version v2.29.2-desktop.2
@@ -99,7 +115,7 @@ nvidia-smi
 ```
 
 <details>
-  <summary>Что примерно должно быть в ответе</summary>
+  <summary>👀 Что примерно должно быть в ответе</summary>
 
 ```
 +-----------------------------------------------------------------------------+
@@ -128,7 +144,7 @@ dpkg -l | grep nvidia-container-toolkit
 ```
 
 <details>
-  <summary>Что примерно должно быть в ответе</summary>
+  <summary>👀 Что примерно должно быть в ответе</summary>
 
 ```
 nvidia-container-toolkit   1.5.0-1   all   NVIDIA container runtime library
@@ -192,14 +208,14 @@ docker-compose up -d --build
 ```
 
 <details>
-  <summary>Что примерно должно быть в ответе</summary>
+  <summary>👀 Что примерно должно быть в ответе</summary>
 
 `TODO`: Указать лог, когда починю Triton Inference Server
 
 </details>
 
 <details>
-  <summary>Как выглядит здоровый лог при запуске</summary>
+  <summary>👀 Как выглядит здоровый лог при запуске</summary>
 
 Для просмотра логов стека приложений выполните следующую команду:
 
