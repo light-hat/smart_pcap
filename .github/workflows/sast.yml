@@ -17,4 +17,4 @@ jobs:
           pip install bandit
       - name: Analysing the code with pylint
         run: |
-          bandit -r ./api/
+          cd api && bandit -r .

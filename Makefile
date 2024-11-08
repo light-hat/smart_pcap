@@ -1,5 +1,10 @@
 all:build
 
+black:
+	@echo "Formatting with black..."
+	isort --apply ./api/
+	python -m black ./api/
+
 model:
 	@echo "Downloading model..."
 	docker build -t model_loader ./model_repository
@@ -18,4 +23,4 @@ down:
 	@echo "Stopping Smart IDS..."
 	docker-compose down
 
-.PHONY: build up down
+.PHONY: black model build up down
