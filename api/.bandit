@@ -1,2 +1,2 @@
 [bandit]
-exclude = api/management/commands/initdb.py,api/tests.py
+exclude = investigations/management/commands/initdb.py,api/tests.py
