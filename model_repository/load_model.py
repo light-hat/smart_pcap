@@ -1,15 +1,20 @@
+"""
+Скрипт для скачивания ML-модели с HuggingFace
+и сохранения в ONNX-формат.
+"""
+
 import torch
 import os
 import shutil
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
-model_name = "rdpahalavan/bert-network-packet-flow-header-payload"
-model = AutoModelForSequenceClassification.from_pretrained(model_name)
-tokenizer = AutoTokenizer.from_pretrained(model_name)
+MODEL_NAME = "rdpahalavan/bert-network-packet-flow-header-payload"
+model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME)
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 
 # Задаем путь к папке для сохранения модели
-model_dir = "bert_network_packet"
-version_dir = os.path.join(model_dir, "1")
+MODEL_DIR= "bert_network_packet"
+version_dir = os.path.join(MODEL_DIR, "1")
 
 # Проверяем, существует ли папка, если да — удаляем её содержимое
 if os.path.exists(version_dir):
@@ -19,8 +24,8 @@ if os.path.exists(version_dir):
 os.makedirs(version_dir, exist_ok=True)
 
 # Пример текста и подготовка данных
-text = "Sample packet text"
-inputs = tokenizer(text, return_tensors="pt")
+TEXT = "Sample packet text"
+inputs = tokenizer(TEXT, return_tensors="pt")
 
 # Сохраняем модель в ONNX формате в папку `1`
 onnx_model_path = os.path.join(version_dir, "model.onnx")
