@@ -50,6 +50,12 @@
 
 Для инференса взята модель [rdpahalavan/bert-network-packet-flow-header-payload](https://huggingface.co/rdpahalavan/bert-network-packet-flow-header-payload) на Hugging Face.
 
+## Архитектура
+
+### База данных
+
+...
+
 ## Требования
 
 ### Аппаратное окружение
@@ -265,3 +271,4 @@ YAML: `http://127.0.0.1/schema/`
 ### Масштабирование
 
 `TODO`: по готовности описать репликацию и балансировку нагрузки методами Docker Compose.
+
