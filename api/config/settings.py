@@ -45,7 +45,7 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "Smart IDS API",
-    "DESCRIPTION": "API для обнаружения атак в дампах сетевого трафика методами машинного обучения.",
+    "DESCRIPTION": "API для обнаружения атак в дампах сетевого трафика методами ML.",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "SERVE_AUTHENTICATION": None,
