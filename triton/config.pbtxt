@@ -1,0 +1,25 @@
+{
+  "name": "distilbert_classifier",
+  "platform": "onnxruntime_onnx",
+  "backend": "onnxruntime",
+  "max_batch_size": 8,
+  "input": [
+    {
+      "name": "input_ids",
+      "data_type": "TYPE_INT64",
+      "dims": [-1, 512]
+    },
+    {
+      "name": "attention_mask",
+      "data_type": "TYPE_INT64",
+      "dims": [-1, 512]
+    }
+  ],
+  "output": [
+    {
+      "name": "logits",
+      "data_type": "TYPE_FP32",
+      "dims": [-1, 24]
+    }
+  ]
+}
