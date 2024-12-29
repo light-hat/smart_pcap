@@ -1,25 +1,29 @@
-{
-  "name": "distilbert_classifier",
-  "platform": "onnxruntime_onnx",
-  "backend": "onnxruntime",
-  "max_batch_size": 8,
-  "input": [
+name: "distilbert_classifier"
+platform: "onnxruntime_onnx"
+backend: "onnxruntime"
+max_batch_size: 4
+input: [
     {
-      "name": "input_ids",
-      "data_type": "TYPE_INT64",
-      "dims": [-1, 512]
+        name: "input_ids"
+        data_type: TYPE_INT64
+        dims: [-1]
     },
     {
-      "name": "attention_mask",
-      "data_type": "TYPE_INT64",
-      "dims": [-1, 512]
+        name: "attention_mask"
+        data_type: TYPE_FP32
+        dims: [-1]
     }
-  ],
-  "output": [
+]
+output: [
     {
-      "name": "logits",
-      "data_type": "TYPE_FP32",
-      "dims": [-1, 24]
+        name: "logits"
+        data_type: TYPE_FP32
+        dims: [24]
     }
-  ]
-}
+]
+instance_group [
+    {
+        kind: KIND_GPU
+        count: 1
+    }
+]
