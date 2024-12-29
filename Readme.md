@@ -91,9 +91,13 @@ docker --version
 <details>
   <summary>👀 Что примерно должно быть в ответе</summary>
 
+<hr />
+
 ```
 Docker version 27.2.0, build 3ab4256
 ```
+
+<hr />
 
 </details>
 
@@ -106,9 +110,13 @@ docker-compose --version
 <details>
   <summary>👀 Что примерно должно быть в ответе</summary>
 
+<hr />
+
 ```
 Docker Compose version v2.29.2-desktop.2
 ```
+
+<hr />
 
 </details>
 
@@ -120,6 +128,8 @@ nvidia-smi
 
 <details>
   <summary>👀 Что примерно должно быть в ответе</summary>
+
+<hr />
 
 ```
 +-----------------------------------------------------------------------------+
@@ -134,6 +144,8 @@ nvidia-smi
 +-------------------------------+----------------------+----------------------+
 
 ```
+
+<hr />
 
 </details>
 
@@ -150,11 +162,15 @@ dpkg -l | grep nvidia-container-toolkit
 <details>
   <summary>👀 Что примерно должно быть в ответе</summary>
 
+<hr />
+
 ```
 ii  nvidia-container-toolkit          1.17.3-1          amd64     NVIDIA Container toolkit
 ii  nvidia-container-toolkit-base     1.17.3-1          amd64     NVIDIA Container Toolkit Base
 
 ```
+
+<hr />
 
 </details>
 
