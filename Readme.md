@@ -212,6 +212,8 @@ docker-compose up -d --build
 <details>
   <summary>👀 Как выглядит здоровый лог при запуске</summary>
 
+<hr />
+
 Лог инференса:
 
 ```shell
@@ -241,6 +243,8 @@ docker-compose logs worker
 ```text
 Logg
 ```
+
+<hr />
 
 </details>
 
