@@ -21,9 +21,3 @@ output: [
         dims: [24]
     }
 ]
-instance_group [
-    {
-        kind: KIND_GPU
-        count: 1
-    }
-]

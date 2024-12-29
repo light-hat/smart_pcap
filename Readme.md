@@ -149,6 +149,36 @@ nvidia-smi
 
 </details>
 
+- Проверяем, стоит ли `CUDA`:
+
+```shell
+nvcc --version
+```
+
+<details>
+  <summary>👀 Что примерно должно быть в ответе</summary>
+
+<hr />
+
+```
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2023 NVIDIA Corporation
+Built on Mon_Apr__3_17:16:06_PDT_2023
+Cuda compilation tools, release 12.1, V12.1.105
+Build cuda_12.1.r12.1/compiler.32688072_0
+
+```
+
+<hr />
+
+</details>
+
+Если нет, то вот команда для её установки:
+
+```shell
+sudo apt install nvidia-cuda-toolkit
+```
+
 - `NVIDIA Container Toolkit`:
 
 
