@@ -26,6 +26,29 @@ services:
 #              capabilities: [ gpu ]
 #    command: ["tritonserver", "--model-repository=/models"]
 
+  triton:
+    build:
+      context: ./triton
+      dockerfile: Dockerfile
+      target: triton_server
+    restart: always
+    networks:
+      - backend
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+      - "8002:8002"
+    deploy:
+      resources:
+        limits:
+          memory: "4g"
+          cpus: "2.0"
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
+
   db:
     image: postgres:15-alpine
     container_name: postgres
@@ -188,7 +211,7 @@ services:
       - static_volume:/home/app/web/static
       - media_volume:/home/app/web/media
     ports:
-      - 80:80
+      - 82:80
     depends_on:
       - api
       - grafana

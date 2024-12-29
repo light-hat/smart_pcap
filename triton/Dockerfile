@@ -1,8 +1,8 @@
-FROM python:3.9-slim-buster AS exporter
+FROM python:3.11 AS exporter
 
 WORKDIR /app
 
-RUN pip install --no-cache-dir transformers onnx
+RUN pip install --no-cache-dir transformers onnx torch
 
 COPY export_model.py ./
 

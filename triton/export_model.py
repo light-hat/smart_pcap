@@ -19,5 +19,5 @@ torch.onnx.export(
         "input_ids": {0: "batch_size", 1: "sequence_length"},
         "attention_mask": {0: "batch_size", 1: "sequence_length"}
     },
-    opset_version=11
+    opset_version=14
 )
