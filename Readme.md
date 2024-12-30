@@ -12,23 +12,30 @@
 Асинхронный API для обнаружения атак в дампах сетевого трафика методами машинного обучения.
 </p>
 
-## Стек
+<h2 align="center"> Стек </h2>
 
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
-![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)
-![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
-![Celery](https://img.shields.io/badge/celery-%23a9cc54.svg?style=for-the-badge&logo=celery&logoColor=ddf4a4)
-![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)
-![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
-![Grafana](https://img.shields.io/badge/grafana-%23F46800.svg?style=for-the-badge&logo=grafana&logoColor=white)
-![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=Prometheus&logoColor=white)
-![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
-![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+<p align="center">
+
+<img src="https://img.shields.io/badge/nVIDIA-%2376B900.svg?style=for-the-badge&logo=nVIDIA&logoColor=white">
+<img src="https://img.shields.io/badge/cuda-000000.svg?style=for-the-badge&logo=nVIDIA&logoColor=green">
+<img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54">
+<img src="https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white">
+<img src="https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray">
+<img src="https://img.shields.io/badge/celery-%23a9cc54.svg?style=for-the-badge&logo=celery&logoColor=ddf4a4">
+<img src="https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white">
+<img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white">
+<img src="https://img.shields.io/badge/grafana-%23F46800.svg?style=for-the-badge&logo=grafana&logoColor=white">
+<img src="https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=Prometheus&logoColor=white">
+<img src="https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white">
+<img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white">
+
+</p>
 
 ## Содержание
 
 <!-- TOC -->
-* [Smart IDS](#smart-ids)
+  * [Стек](#стек)
+  * [Содержание](#содержание)
   * [Пару слов о модели](#пару-слов-о-модели)
   * [Требования](#требования)
     * [Аппаратное окружение](#аппаратное-окружение)
@@ -38,23 +45,14 @@
     * [Конфигурирование](#конфигурирование)
     * [Запуск проекта](#запуск-проекта)
   * [Эксплуатация](#эксплуатация)
-    * [Схема работы](#схема-работы)
     * [Документация API](#документация-api)
     * [Административная панель](#административная-панель)
-    * [Управление проектом через Make](#управление-проектом-через-make)
     * [Мониторинг](#мониторинг)
-    * [Масштабирование](#масштабирование)
 <!-- TOC -->
 
 ## Пару слов о модели
 
 Для инференса взята модель [rdpahalavan/bert-network-packet-flow-header-payload](https://huggingface.co/rdpahalavan/bert-network-packet-flow-header-payload) на Hugging Face.
-
-## Архитектура
-
-### База данных
-
-...
 
 ## Требования
 
@@ -93,9 +91,13 @@ docker --version
 <details>
   <summary>👀 Что примерно должно быть в ответе</summary>
 
+<hr />
+
 ```
 Docker version 27.2.0, build 3ab4256
 ```
+
+<hr />
 
 </details>
 
@@ -108,9 +110,13 @@ docker-compose --version
 <details>
   <summary>👀 Что примерно должно быть в ответе</summary>
 
+<hr />
+
 ```
 Docker Compose version v2.29.2-desktop.2
 ```
+
+<hr />
 
 </details>
 
@@ -122,6 +128,8 @@ nvidia-smi
 
 <details>
   <summary>👀 Что примерно должно быть в ответе</summary>
+
+<hr />
 
 ```
 +-----------------------------------------------------------------------------+
@@ -137,7 +145,39 @@ nvidia-smi
 
 ```
 
+<hr />
+
 </details>
+
+- Проверяем, стоит ли `CUDA`:
+
+```shell
+nvcc --version
+```
+
+<details>
+  <summary>👀 Что примерно должно быть в ответе</summary>
+
+<hr />
+
+```
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2023 NVIDIA Corporation
+Built on Mon_Apr__3_17:16:06_PDT_2023
+Cuda compilation tools, release 12.1, V12.1.105
+Build cuda_12.1.r12.1/compiler.32688072_0
+
+```
+
+<hr />
+
+</details>
+
+Если нет, то вот команда для её установки:
+
+```shell
+sudo apt install nvidia-cuda-toolkit
+```
 
 - `NVIDIA Container Toolkit`:
 
@@ -152,12 +192,20 @@ dpkg -l | grep nvidia-container-toolkit
 <details>
   <summary>👀 Что примерно должно быть в ответе</summary>
 
-```
-nvidia-container-toolkit   1.5.0-1   all   NVIDIA container runtime library
+<hr />
 
 ```
+ii  nvidia-container-toolkit          1.17.3-1          amd64     NVIDIA Container toolkit
+ii  nvidia-container-toolkit-base     1.17.3-1          amd64     NVIDIA Container Toolkit Base
+
+```
+
+<hr />
 
 </details>
+
+> [!TIP]
+> Если в этом ответе пусто, вот [мануал](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) как установить NVIDIA Container Toolkit.
 
 ### Конфигурирование
 
@@ -184,8 +232,6 @@ GF_SECURITY_ADMIN_USER=admin
 ```
 
 Переменные окружения в конфигурации:
-
-- `MODEL_REPOSITORY`: путь к папке моделей в контейнере Triton (рекомендуется оставить значение по умолчанию);
 
 - `API_URL`: адрес, на котором будет развёрнут сервис;
 
@@ -214,30 +260,45 @@ docker-compose up -d --build
 ```
 
 <details>
-  <summary>👀 Что примерно должно быть в ответе</summary>
-
-`TODO`: Указать лог, когда починю Triton Inference Server
-
-</details>
-
-<details>
   <summary>👀 Как выглядит здоровый лог при запуске</summary>
 
-Для просмотра логов стека приложений выполните следующую команду:
+<hr />
+
+Лог инференса:
 
 ```shell
-docker-compose logs
+docker-compose logs triton
 ```
 
-`TODO`: Указать лог, когда закончу всё
+```text
+Лог
+```
+
+Лог API:
+
+```shell
+docker-compose logs api
+```
+
+```text
+ЛОг
+```
+
+Лог воркера:
+
+```shell
+docker-compose logs worker
+```
+
+```text
+Logg
+```
+
+<hr />
 
 </details>
 
 ## Эксплуатация
-
-### Схема работы
-
-`TODO`: диаграмма последовательности работы API.
 
 ### Документация API
 
@@ -260,15 +321,6 @@ YAML: `http://127.0.0.1/schema/`
 > [!IMPORTANT]
 > Учётные данные рекомендуется сменить сразу после развёртывания на более устойчивые.
 
-### Управление проектом через Make
-
-`TODO`: По готовности Makefile описать управление проектом
-
 ### Мониторинг
 
 `TODO`: описать работу с системой мониторинга по готовности
-
-### Масштабирование
-
-`TODO`: по готовности описать репликацию и балансировку нагрузки методами Docker Compose.
-
