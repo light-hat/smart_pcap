@@ -219,7 +219,6 @@ cd smart_ids
 В корне репозитория создайте `.env` файл со следующим содержимым:
 
 ```
-MODEL_REPOSITORY=/models
 API_URL=127.0.0.1
 API_PORT=80
 POSTGRES_HOST=db
