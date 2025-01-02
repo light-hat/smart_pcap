@@ -2,21 +2,15 @@
 Маршруты для пользовательской версии REST API.
 """
 
-from django.urls import include, path
-from django.views.decorators.csrf import csrf_exempt
-
-from .views import DumpAPIView
+from uuid import uuid4
+from django.urls import path
+#from django.views.decorators.csrf import csrf_exempt
+from ids.views import (
+    DumpListCreate,
+    DumpDetailUpdateDelete
+)
 
 urlpatterns = [
-    path("dump/list/", csrf_exempt(DumpAPIView.as_view({"get": "get"}))),
-    path("dump/upload/", csrf_exempt(DumpAPIView.as_view({"post": "post"}))),
-    path(
-        "dump/<int:pk>/status/", csrf_exempt(DumpAPIView.as_view({"get": "status"})),
-    ),
-    path(
-        "dump/<int:pk>/packets/", csrf_exempt(DumpAPIView.as_view({"get": "retrieve"})),
-    ),
-    path(
-        "dump/<int:pk>/", csrf_exempt(DumpAPIView.as_view({"put": "put", "delete": "delete"})),
-    ),
+    path('dump/', DumpListCreate.as_view()),
+    path('dump/<uuid:pk>/', DumpDetailUpdateDelete.as_view()),
 ]

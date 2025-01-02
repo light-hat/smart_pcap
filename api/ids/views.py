@@ -4,147 +4,58 @@ API эндпоинты для дампов.
 
 import logging
 
-from drf_spectacular.types import OpenApiTypes
-from drf_spectacular.utils import OpenApiParameter, OpenApiResponse, extend_schema
-from rest_framework import serializers, viewsets
-from rest_framework.permissions import IsAuthenticated
+from ids.serializers import *
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
-
-from core.models import Dump
+from rest_framework.decorators import api_view
+from rest_framework import status
+from ids.models import (Dump, Packet)
+from ids.serializers import (DumpCreateSerializer, DumpUpdateSerializer)
+from rest_framework.parsers import MultiPartParser
+from drf_spectacular.utils import extend_schema
 
 logger = logging.getLogger(__name__)
 
 
-class DumpSerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=255)
-    description = serializers.CharField(max_length=None)
-    language = serializers.CharField(max_length=255)
-
-
-class DumpAPIView(viewsets.ViewSet):
-    """
-    API для работы с Дампами.
-    """
+class DumpListCreate(ListCreateAPIView):
+    queryset = Dump.objects.all()
+    serializer_class = DumpCreateSerializer
+    parser_classes = [MultiPartParser]
 
     @extend_schema(
-        responses={
-            200: OpenApiResponse(description="Список Дампов"),
-            400: OpenApiResponse(description="Некорректный запрос"),
-            500: OpenApiResponse(description="Внутренняя ошибка сервера"),
+        request={
+            'multipart/form-data': {
+                'type': 'object',
+                'properties': {
+                    'name': {
+                        'type': 'string',
+                        'description': 'Название',
+                    },
+                    'details': {
+                        'type': 'string',
+                        'description': 'Описание',
+                    },
+                    'source': {
+                        'type': 'string',
+                        'format': 'binary',
+                    },
+                },
+                'required': ['source'],
+            }
         },
-        methods=["GET"],
-        tags=["dump"],
-    )
-    def get(self, request):
-        """Получение всех объектов."""
-
-        try:
-            query = Query(model=Dump)
-            result = query.all()
-
-            if result.is_success:
-                return Response(result.to_dict(), status=200)
-            else:
-                return Response(result.to_dict(), status=400)
-
-        except Exception as e:
-            logger.error(e)
-            return Response(Result(e).to_dict(), status=500)
-
-    @extend_schema(
-        request=ProjectSerializer,
         responses={
-            201: OpenApiResponse(description="Дамп успешно загружен"),
-            400: OpenApiResponse(description="Ошибка валидации данных"),
+            201: 'Файл успешно загружен',
+            400: 'Ошибка валидации',
         },
-        methods=["POST"],
-        tags=["dump"],
     )
-    def post(self, request):
-        """Создание нового объекта."""
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
 
-        try:
-            serializer = ProjectSerializer(data=request.data)
-            if serializer.is_valid():
-                data = serializer.validated_data
-                command = Command(model=Project, data=data)
-                result = command.create()
 
-                if result.is_success:
-                    return Response(result.to_dict(), status=201)
-                else:
-                    return Response(result.to_dict(), status=400)
-            return Response(serializer.errors, status=400)
+class DumpDetailUpdateDelete(RetrieveUpdateDestroyAPIView):
+    queryset = Dump.objects.all()
+    serializer_class = DumpUpdateSerializer
 
-        except Exception as e:
-            logger.error(e)
-            return Response(Result(e).to_dict(), status=500)
-
-    @extend_schema(
-        parameters=[
-            OpenApiParameter(
-                name="id", type=OpenApiTypes.INT, location=OpenApiParameter.PATH
-            ),
-        ],
-        request=DumpSerializer,
-        responses={
-            200: OpenApiResponse(description="Дамп успешно изменён"),
-            400: OpenApiResponse(description="Ошибка валидации данных"),
-            404: OpenApiResponse(description="Дамп не найден"),
-        },
-        methods=["PUT"],
-        tags=["dump"],
-    )
-    def put(self, request, pk):
-        """Обновление объекта."""
-
-        try:
-            serializer = DumpSerializer(data=request.data)
-            if serializer.is_valid():
-                data = serializer.validated_data
-                command = Command(
-                    model=Dump,
-                    entity_id=pk,
-                    data=data,
-                    foreign_keys={"user": self.request.user.id},
-                )
-                result = command.update()
-
-                if result.is_success:
-                    return Response(result.to_dict(), status=200)
-                else:
-                    return Response(result.to_dict(), status=400)
-            return Response(serializer.errors, status=400)
-
-        except Exception as e:
-            logger.error(e)
-            return Response(Result(e).to_dict(), status=500)
-
-    @extend_schema(
-        parameters=[
-            OpenApiParameter(
-                name="id", type=OpenApiTypes.INT, location=OpenApiParameter.PATH
-            ),
-        ],
-        responses={
-            204: OpenApiResponse(description="Дамп успешно удалён"),
-            404: OpenApiResponse(description="Дамп не найден"),
-        },
-        methods=["DELETE"],
-        tags=["dump"],
-    )
-    def delete(self, request, pk):
-        """Удаление объекта."""
-
-        try:
-            command = Command(model=Dump, entity_id=pk)
-            result = command.delete()
-
-            if result.is_success:
-                return Response(result.to_dict(), status=204)
-            else:
-                return Response(result.to_dict(), status=400)
-
-        except Exception as e:
-            logger.error(e)
-            return Response(Result(e).to_dict(), status=500)
+    def update(self, request, *args, **kwargs):
+        response = super().update(request, *args, **kwargs)
+        return response
