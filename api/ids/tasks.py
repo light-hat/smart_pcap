@@ -128,9 +128,3 @@ def process_dump_file(dump_id: str) -> None:
         dump.status = "error"
         dump.result = str(e)
         dump.save()
-
-
-
-
-
-
