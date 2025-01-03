@@ -21,7 +21,13 @@ class Dump(models.Model):
     )
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    #user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(
+        verbose_name="Название дампа",
+        max_length=100,
+        null=True,
+        blank=True
+    )
     source = models.FileField(
         verbose_name="Дамп",
         upload_to="dumps/",
@@ -33,7 +39,11 @@ class Dump(models.Model):
         choices=STATE_LABELS,
         default="processing",
     )
-    details = models.TextField(verbose_name="Дополнительная информация")
+    details = models.TextField(
+        verbose_name="Дополнительная информация",
+        null=True,
+        blank=True
+    )
     created = models.DateTimeField(verbose_name="Дата загрузки", auto_now_add=True)
 
     class Meta:
@@ -48,42 +58,12 @@ class Dump(models.Model):
 class Packet(models.Model):
     """
     Модель, описывающая сетевой пакет.
-    TODO: Доработать и продумать метаданные.
     """
-
-    ATTACK_LABELS = (
-        ("0", "Analysis"),
-        ("1", "Backdoor"),
-        ("2", "Bot"),
-        ("3", "DDoS"),
-        ("4", "DoS"),
-        ("5", "DoS GoldenEye"),
-        ("6", "DoS Hulk"),
-        ("7", "DoS SlowHTTPTest"),
-        ("8", "DoS Slowloris"),
-        ("9", "Exploits"),
-        ("10", "FTP Patator"),
-        ("11", "Fuzzers"),
-        ("12", "Generic"),
-        ("13", "Heartbleed"),
-        ("14", "Infiltration"),
-        ("15", "Normal"),
-        ("16", "Port Scan"),
-        ("17", "Reconnaissance"),
-        ("18", "SSH Patator"),
-        ("19", "Shellcode"),
-        ("20", "Web Attack - Brute Force"),
-        ("21", "Web Attack - SQL Injection"),
-        ("22", "Web Attack - XSS"),
-        ("23", "Worms"),
-    )
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     dump = models.ForeignKey(Dump, on_delete=models.CASCADE)
     created = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
-    label = models.CharField(
-        verbose_name="Метка", max_length=100, choices=ATTACK_LABELS, default="0"
-    )
+    label = models.CharField(verbose_name="Метка", max_length=100)
 
     class Meta:
         verbose_name = "Сетевой пакет"

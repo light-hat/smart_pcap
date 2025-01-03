@@ -1,31 +1,6 @@
-version: '3.8'
+version: '3'
 
 services:
-#  triton:
-#    image: nvcr.io/nvidia/tritonserver:23.01-py3
-#    expose:
-#      - 8000
-#      - 8001
-#      - 8002
-#    volumes:
-#      - ./model_repository:/models
-#    environment:
-#      - MODEL_REPOSITORY
-#    restart: always
-#    networks:
-#      - backend
-#    deploy:
-#      resources:
-#        limits:
-#          memory: "4g"
-#          cpus: "2.0"
-#        reservations:
-#          devices:
-#            - driver: nvidia
-#              count: all
-#              capabilities: [ gpu ]
-#    command: ["tritonserver", "--model-repository=/models"]
-
   triton:
     build:
       context: ./triton
@@ -34,16 +9,18 @@ services:
     restart: always
     networks:
       - backend
-    ports:
-      - "8000:8000"
-      - "8001:8001"
-      - "8002:8002"
+    expose:
+      - 8000
+      - 8001
+      - 8002
     deploy:
       resources:
         limits:
-          memory: "8g"
+          memory: "4g"
           cpus: "2.0"
         reservations:
+          memory: "2g"
+          cpus: "1.0"
           devices:
             - driver: nvidia
               count: all

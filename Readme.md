@@ -80,110 +80,12 @@
 
 ## Развёртывание
 
-### Preflight
-
-- Проверка установки `Docker`:
-
-```shell
-docker --version
-```
-
-<details>
-  <summary>👀 Что примерно должно быть в ответе</summary>
-
-<hr />
-
-```
-Docker version 27.2.0, build 3ab4256
-```
-
-<hr />
-
-</details>
-
-- Проверка установки `Docker Compose`:
-
-```shell
-docker-compose --version
-```
-
-<details>
-  <summary>👀 Что примерно должно быть в ответе</summary>
-
-<hr />
-
-```
-Docker Compose version v2.29.2-desktop.2
-```
-
-<hr />
-
-</details>
-
-- `Драйвера NVIDIA`:
-
-```shell
-nvidia-smi
-```
-
-<details>
-  <summary>👀 Что примерно должно быть в ответе</summary>
-
-<hr />
-
-```
-+-----------------------------------------------------------------------------+
-| NVIDIA-SMI 470.57.02    Driver Version: 470.57.02    CUDA Version: 11.4     |
-|-------------------------------+----------------------+----------------------+
-| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
-| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
-|                               |                      |               MIG M. |
-|===============================+======================+======================|
-|   0  Tesla T4            Off  | 00000000:00:1E.0 Off |                    0 |
-| N/A   42C    P8    12W /  70W |      0MiB / 15109MiB |      0%      Default |
-+-------------------------------+----------------------+----------------------+
-
-```
-
-<hr />
-
-</details>
-
-- Проверяем, стоит ли `CUDA`:
-
-```shell
-nvcc --version
-```
-
-<details>
-  <summary>👀 Что примерно должно быть в ответе</summary>
-
-<hr />
-
-```
-nvcc: NVIDIA (R) Cuda compiler driver
-Copyright (c) 2005-2023 NVIDIA Corporation
-Built on Mon_Apr__3_17:16:06_PDT_2023
-Cuda compilation tools, release 12.1, V12.1.105
-Build cuda_12.1.r12.1/compiler.32688072_0
-
-```
-
-<hr />
-
-</details>
-
-Если нет, то вот команда для её установки:
-
-```shell
-sudo apt install nvidia-cuda-toolkit
-```
-
-- `NVIDIA Container Toolkit`:
-
-
 > [!NOTE]
-> В **Windows** поддержка **NVIDIA Container Toolkit** доступна через **WSL 2** (Windows Subsystem for Linux), так как Docker на Windows работает внутри WSL.
+> Тестирование проводилось на сервере с Ubuntu 22.04 с GPU Tesla T4.
+
+### Подготовка сервера
+
+...
 
 ```shell
 dpkg -l | grep nvidia-container-toolkit
@@ -219,7 +121,6 @@ cd smart_ids
 В корне репозитория создайте `.env` файл со следующим содержимым:
 
 ```
-MODEL_REPOSITORY=/models
 API_URL=127.0.0.1
 API_PORT=80
 POSTGRES_HOST=db

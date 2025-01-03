@@ -4,7 +4,7 @@
 
 from django.contrib import admin
 
-from .models import Dump, Packet
+from ids.models import Dump, Packet
 
 admin.site.site_title = "Smart IDS"
 admin.site.site_header = "Smart IDS admin"
