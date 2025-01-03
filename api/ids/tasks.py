@@ -1,10 +1,13 @@
 from celery import shared_task
-from ids.models import Dump
+from ids.models import Dump, HandledPacket
 from scapy.all import *
+from datetime import datetime
 import tritonclient.http as httpclient
 import numpy as np
 from transformers import DistilBertTokenizer
 from typing import Union
+from django.conf import settings
+import os
 
 TRITON_SERVER_URL = "triton:8000"
 
@@ -50,11 +53,11 @@ def processing_packet_conversion(packet: Union[scapy.packet.Packet, scapy.layers
     while packet_2:
         # Extract and count protocol layers in the packet.
         layer = packet_2[0]
-        if layer.name not in protocol_counts:
-            protocol_counts[layer.name] = 0
-        else:
-            protocol_counts[layer.name] += 1
-        protocols.append(layer.name)
+        # if layer.name not in protocol_counts:
+        #     protocol_counts[layer.name] = 0
+        # else:
+        #     protocol_counts[layer.name] += 1
+        #protocols.append(layer.name)
 
         # Break if there are no more payload layers.
         if not layer.payload:
@@ -78,7 +81,23 @@ def processing_packet_conversion(packet: Union[scapy.packet.Packet, scapy.layers
     payload_content = payload_bytes.decode('utf-8', 'replace')
     payload_decimal = ' '.join(str(byte) for byte in payload_bytes)
     final_data = "0" + " " + "0" + " " + "195" + " " + "-1" + " " + str(src_port) + " " + str(dst_port) + " " + str(ip_length) + " " + str(payload_length) + " " + str(ip_ttl) + " " + str(ip_tos) + " " + str(tcp_data_offset) + " " + str(int(tcp_flags)) + " " + "-1" + " " + str(payload_decimal)
-    return final_data
+
+    #return final_data
+
+    return {
+        "timestamp": datetime.fromtimestamp(float(packet.time)),
+        "source_ip": src_ip,
+        "destination_ip": dst_ip,
+        "source_port": src_port,
+        "destination_port": dst_port,
+        "ip_length": ip_length,
+        "ip_ttl": ip_ttl,
+        "ip_tos": ip_tos,
+        "payload": str(payload_content),
+        "tcp_data_offset": tcp_data_offset,
+        "tcp_flags": str(tcp_flags),
+        "final_data": final_data,
+    }
 
 def prepare_input(text: str) -> Tuple[np.ndarray, np.ndarray]:
     """
@@ -115,16 +134,50 @@ def process_dump_file(dump_id: str) -> None:
     dump = Dump.objects.get(id=dump_id)
 
     try:
-        dump.status = "processing"
-        dump.save()
 
-        # ...
+        dump_file = os.path.join(str(settings.MEDIA_ROOT), str(dump.source))
 
-        dump.status = "ready"
-        dump.result = result
+        #packets_data = []
+
+        with PcapReader(dump_file) as pcap:
+            for pkt in pcap:
+                if IP in pkt and TCP in pkt:  # IPv4 and TCP
+                    #payload_bytes_to_filter = bytes(pkt.payload)
+                    packet_data = processing_packet_conversion(pkt)
+                    if packet_data:
+                        #packets_data.append(packet_data)
+                        #print(packet_data)
+                        packet_object = HandledPacket.objects.create(
+                            dump=dump,
+                            timestamp=packet_data["timestamp"],
+                            source_ip=packet_data["source_ip"],
+                            destination_ip=packet_data["destination_ip"],
+                            source_port=packet_data["source_port"],
+                            destination_port=packet_data["destination_port"],
+                            ip_length=packet_data["ip_length"],
+                            ip_ttl=packet_data["ip_ttl"],
+                            ip_tos=packet_data["ip_tos"],
+                            #payload=packet_data["payload"],
+                            tcp_data_offset=packet_data["tcp_data_offset"],
+                            tcp_flags=packet_data["tcp_flags"],
+                            inference_input=packet_data["final_data"],
+                            label="test"
+                        )
+                        print(packet_object)
+
+
+        #print(str(packets_data))
+
+        dump.state = "ready"
         dump.save()
 
     except Exception as e:
-        dump.status = "error"
-        dump.result = str(e)
+        dump.state = "error"
+        dump.details += "\n Error: " + str(e)
         dump.save()
+
+        print(f"Тип исключения: {type(e)}")
+        print(f"Сообщение исключения: {e}")
+        print(f"Информация об исключении: {repr(e)}")
+        print(
+            f"Путь к файлу и строка, где произошло исключение: {e.__traceback__.tb_frame.f_code.co_filename}:{e.__traceback__.tb_lineno}")

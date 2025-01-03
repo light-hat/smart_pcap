@@ -8,7 +8,8 @@ class DumpCreateSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Dump
-        fields = ['id', 'name', 'details', 'source']
+        fields = ('id', 'name', 'details', 'source')
+        read_only_fields = ('state', )
 
 
 class DumpUpdateSerializer(serializers.ModelSerializer):
@@ -18,4 +19,5 @@ class DumpUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Dump
-        fields = ['id', 'name', 'details']
+        fields = ('id', 'name', 'details')
+        read_only_fields = ('state', )

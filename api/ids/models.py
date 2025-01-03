@@ -52,10 +52,10 @@ class Dump(models.Model):
         ordering = ["-created"]
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
-class Packet(models.Model):
+class HandledPacket(models.Model):
     """
     Модель, описывающая сетевой пакет.
     """
@@ -63,6 +63,20 @@ class Packet(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     dump = models.ForeignKey(Dump, on_delete=models.CASCADE)
     created = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
+
+    timestamp = models.DateTimeField(verbose_name="Дата и время передачи IP-пакета")
+    source_ip = models.CharField(verbose_name="IP отправителя", max_length=15)
+    destination_ip = models.CharField(verbose_name="IP получателя", max_length=15)
+    source_port = models.IntegerField(verbose_name="Порт источника")
+    destination_port = models.IntegerField(verbose_name="Порт назначения")
+    ip_length = models.IntegerField(verbose_name="Длина IP-пакета")
+    ip_ttl = models.IntegerField(verbose_name="Time to Live (TTL)")
+    ip_tos = models.IntegerField(verbose_name=" Type of Service (ToS)")
+    #payload = models.TextField(verbose_name="Полезная нагрузка")
+    tcp_data_offset = models.IntegerField(verbose_name=" Смещение данных TCP")
+    tcp_flags = models.CharField(verbose_name="Флаги TCP", max_length=15)
+    inference_input = models.TextField(verbose_name="Данные для инференса")
+
     label = models.CharField(verbose_name="Метка", max_length=100)
 
     class Meta:
@@ -71,4 +85,4 @@ class Packet(models.Model):
         ordering = ["-created"]
 
     def __str__(self):
-        return self.id
+        return str(self.id)
