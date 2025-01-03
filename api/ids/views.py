@@ -9,7 +9,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-from ids.models import (Dump, Packet)
+from ids.models import (Dump, HandledPacket)
 from ids.serializers import (DumpCreateSerializer, DumpUpdateSerializer)
 from rest_framework.parsers import MultiPartParser
 from drf_spectacular.utils import extend_schema
