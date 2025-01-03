@@ -52,7 +52,7 @@ class Dump(models.Model):
         ordering = ["-created"]
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 class Packet(models.Model):
@@ -71,4 +71,4 @@ class Packet(models.Model):
         ordering = ["-created"]
 
     def __str__(self):
-        return self.id
+        return str(self.id)

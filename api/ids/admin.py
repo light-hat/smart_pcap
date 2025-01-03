@@ -17,7 +17,7 @@ class DumpAdmin(admin.ModelAdmin):
     Конфигурация админ-панели для модели Dump.
     """
 
-    list_display = ("id", "user", "state", "created")
+    list_display = ("id", "state", "created")
     list_display_links = ("id",)
     list_filter = ("state",)
 

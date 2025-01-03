@@ -56,11 +56,7 @@ class DumpListCreate(ListCreateAPIView):
                 },
                 'required': ['source'],
             }
-        },
-        responses={
-            201: 'Файл успешно загружен',
-            400: 'Ошибка валидации',
-        },
+        }
     )
     def post(self, request, *args, **kwargs):
         """

@@ -115,16 +115,13 @@ def process_dump_file(dump_id: str) -> None:
     dump = Dump.objects.get(id=dump_id)
 
     try:
-        dump.status = "processing"
-        dump.save()
 
         # ...
 
-        dump.status = "ready"
-        dump.result = result
+        dump.state = "ready"
         dump.save()
 
     except Exception as e:
-        dump.status = "error"
+        dump.state = "error"
         dump.result = str(e)
         dump.save()
