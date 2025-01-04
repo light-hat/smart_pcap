@@ -85,7 +85,88 @@
 
 ### Подготовка сервера
 
+> [!TIP]
+> Для начала стоит установить Docker и Docker Compose на ваш сервер по этой [инструкции](https://docs.docker.com/engine/install/ubuntu/) с официального сайта Docker.
+
+Когда установлен `Docker`, проверьте драйвера видеокарты:
+
+```shell
+nvidia-smi
+```
+
+<details>
+  <summary>👀 Что примерно должно быть в ответе</summary>
+
+<hr />
+
+```
+Sat Jan  4 01:37:28 2025       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.183.01             Driver Version: 535.183.01   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  Tesla T4                       Off | 00000000:00:06.0 Off |                  Off |
+| N/A   49C    P0              28W /  70W |    783MiB / 16384MiB |      0%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+```
+
+<hr />
+
+</details>
+
+<details>
+  <summary>👀 Как поставить драйвера на GPU</summary>
+
+<hr />
+
+Устанавливаем инструменты для компиляции драйверов и заголовки ядра:
+
+```shell
+sudo apt update
+sudo apt-get install build-essential linux-headers-$(uname -r)
+```
+
+Ищем доступные версии драйвера:
+
+```shell
+ubuntu-drivers devices
+```
+
+Находим в выводе похожую строчку:
+
+```text
 ...
+driver   : nvidia-driver-535 - distro non-free recommended
+...
+```
+
+Это версия драйвера, которую вам нужно установить. Делаем это:
+
+```shell
+sudo apt-get install nvidia-driver-535
+```
+
+Затем перезапускаем сервер:
+
+```shell
+sudo reboot
+```
+
+После перезагрузки снова проверяем драйвера GPU:
+
+```shell
+nvidia-smi
+```
+
+<hr />
+
+</details>
+
+После этого проверьте, установлен ли на сервере `NVIDIA Container Toolkit`:
 
 ```shell
 dpkg -l | grep nvidia-container-toolkit
@@ -107,7 +188,7 @@ ii  nvidia-container-toolkit-base     1.17.3-1          amd64     NVIDIA Contain
 </details>
 
 > [!TIP]
-> Если в этом ответе пусто, вот [мануал](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) как установить NVIDIA Container Toolkit.
+> Если в этом ответе пусто, вот [мануал](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) c официального сайта как установить NVIDIA Container Toolkit.
 
 ### Конфигурирование
 
@@ -152,6 +233,12 @@ GF_SECURITY_ADMIN_USER=admin
 
 - `GF_SECURITY_ADMIN_USER`: пароль для авторизации в Grafana.
 
+Можете сделать это автоматически через скрипт:
+
+```shell
+./configure.sh
+```
+
 ### Запуск проекта
 
 Запустите стек приложений на Docker следующей командой:
@@ -168,31 +255,156 @@ docker-compose up -d --build
 Лог инференса:
 
 ```shell
-docker-compose logs triton
+sudo docker compose logs triton
 ```
 
 ```text
-Лог
+triton-1  | 
+triton-1  | =============================
+triton-1  | == Triton Inference Server ==
+triton-1  | =============================
+triton-1  | 
+triton-1  | NVIDIA Release 23.01 (build 52277748)
+triton-1  | Triton Server Version 2.30.0
+triton-1  | 
+triton-1  | Copyright (c) 2018-2022, NVIDIA CORPORATION & AFFILIATES.  All rights reserved.
+triton-1  | 
+triton-1  | Various files include modifications (c) NVIDIA CORPORATION & AFFILIATES.  All rights reserved.
+triton-1  | 
+triton-1  | This container image and its contents are governed by the NVIDIA Deep Learning Container License.
+triton-1  | By pulling and using the container, you accept the terms and conditions of this license:
+triton-1  | https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license
+triton-1  | 
+triton-1  | I0104 00:22:29.587736 1 pinned_memory_manager.cc:240] Pinned memory pool is created at '0x7f438a000000' with size 268435456
+triton-1  | I0104 00:22:29.591405 1 cuda_memory_manager.cc:105] CUDA memory pool is created on device 0 with size 67108864
+triton-1  | I0104 00:22:29.596887 1 model_lifecycle.cc:459] loading: distilbert_classifier:1
+triton-1  | I0104 00:22:29.599877 1 onnxruntime.cc:2459] TRITONBACKEND_Initialize: onnxruntime
+triton-1  | I0104 00:22:29.599965 1 onnxruntime.cc:2469] Triton TRITONBACKEND API version: 1.11
+triton-1  | I0104 00:22:29.600015 1 onnxruntime.cc:2475] 'onnxruntime' TRITONBACKEND API version: 1.11
+triton-1  | I0104 00:22:29.600051 1 onnxruntime.cc:2505] backend configuration:
+triton-1  | {"cmdline":{"auto-complete-config":"true","min-compute-capability":"6.000000","backend-directory":"/opt/tritonserver/backends","default-max-batch-size":"4"}}
+triton-1  | I0104 00:22:29.622589 1 onnxruntime.cc:2563] TRITONBACKEND_ModelInitialize: distilbert_classifier (version 1)
+triton-1  | I0104 00:22:29.623700 1 onnxruntime.cc:666] skipping model configuration auto-complete for 'distilbert_classifier': inputs and outputs already specified
+triton-1  | I0104 00:22:29.624518 1 onnxruntime.cc:2606] TRITONBACKEND_ModelInstanceInitialize: distilbert_classifier (GPU device 0)
+triton-1  | 2025-01-04 00:22:30.303281404 [W:onnxruntime:, session_state.cc:1030 VerifyEachNodeIsAssignedToAnEp] Some nodes were not assigned to the preferred execution providers which may or may not have an negative impact on performance. e.g. ORT explicitly assigns shape related ops to CPU to improve perf.
+triton-1  | 2025-01-04 00:22:30.303326346 [W:onnxruntime:, session_state.cc:1032 VerifyEachNodeIsAssignedToAnEp] Rerunning with verbose output on a non-minimal build will show node assignments.
+triton-1  | I0104 00:22:30.591136 1 model_lifecycle.cc:694] successfully loaded 'distilbert_classifier' version 1
+triton-1  | I0104 00:22:30.591333 1 server.cc:563] 
+triton-1  | +------------------+------+
+triton-1  | | Repository Agent | Path |
+triton-1  | +------------------+------+
+triton-1  | +------------------+------+
+triton-1  | 
+triton-1  | I0104 00:22:30.591412 1 server.cc:590] 
+triton-1  | +-------------+-----------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+triton-1  | | Backend     | Path                                                            | Config                                                                                                                                                        |
+triton-1  | +-------------+-----------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+triton-1  | | onnxruntime | /opt/tritonserver/backends/onnxruntime/libtriton_onnxruntime.so | {"cmdline":{"auto-complete-config":"true","min-compute-capability":"6.000000","backend-directory":"/opt/tritonserver/backends","default-max-batch-size":"4"}} |
+triton-1  | +-------------+-----------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+triton-1  | 
+triton-1  | I0104 00:22:30.591520 1 server.cc:633] 
+triton-1  | +-----------------------+---------+--------+
+triton-1  | | Model                 | Version | Status |
+triton-1  | +-----------------------+---------+--------+
+triton-1  | | distilbert_classifier | 1       | READY  |
+triton-1  | +-----------------------+---------+--------+
+triton-1  | 
+triton-1  | I0104 00:22:30.668177 1 metrics.cc:864] Collecting metrics for GPU 0: Tesla T4
+triton-1  | I0104 00:22:30.669197 1 metrics.cc:757] Collecting CPU metrics
+triton-1  | I0104 00:22:30.669509 1 tritonserver.cc:2264] 
+triton-1  | +----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+triton-1  | | Option                           | Value                                                                                                                                                                                                |
+triton-1  | +----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+triton-1  | | server_id                        | triton                                                                                                                                                                                               |
+triton-1  | | server_version                   | 2.30.0                                                                                                                                                                                               |
+triton-1  | | server_extensions                | classification sequence model_repository model_repository(unload_dependents) schedule_policy model_configuration system_shared_memory cuda_shared_memory binary_tensor_data statistics trace logging |
+triton-1  | | model_repository_path[0]         | /models/                                                                                                                                                                                             |
+triton-1  | | model_control_mode               | MODE_NONE                                                                                                                                                                                            |
+triton-1  | | strict_model_config              | 0                                                                                                                                                                                                    |
+triton-1  | | rate_limit                       | OFF                                                                                                                                                                                                  |
+triton-1  | | pinned_memory_pool_byte_size     | 268435456                                                                                                                                                                                            |
+triton-1  | | cuda_memory_pool_byte_size{0}    | 67108864                                                                                                                                                                                             |
+triton-1  | | response_cache_byte_size         | 0                                                                                                                                                                                                    |
+triton-1  | | min_supported_compute_capability | 6.0                                                                                                                                                                                                  |
+triton-1  | | strict_readiness                 | 1                                                                                                                                                                                                    |
+triton-1  | | exit_timeout                     | 30                                                                                                                                                                                                   |
+triton-1  | +----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+triton-1  | 
+triton-1  | I0104 00:22:30.673629 1 grpc_server.cc:4819] Started GRPCInferenceService at 0.0.0.0:8001
+triton-1  | I0104 00:22:30.674047 1 http_server.cc:3477] Started HTTPService at 0.0.0.0:8000
+triton-1  | I0104 00:22:30.715444 1 http_server.cc:184] Started Metrics Service at 0.0.0.0:8002
 ```
 
 Лог API:
 
 ```shell
-docker-compose logs api
+sudo docker compose logs api
 ```
 
 ```text
-ЛОг
+api-1  | DB not yet run...
+api-1  | DB did run.
+api-1  | Migrations for 'ids':
+api-1  |   ids/migrations/0001_initial.py
+api-1  |     + Create model Dump
+api-1  |     + Create model HandledPacket
+api-1  | Operations to perform:
+api-1  |   Apply all migrations: admin, auth, contenttypes, ids, sessions
+api-1  | Running migrations:
+api-1  |   Applying contenttypes.0001_initial... OK
+api-1  |   Applying auth.0001_initial... OK
+api-1  |   Applying admin.0001_initial... OK
+api-1  |   Applying admin.0002_logentry_remove_auto_add... OK
+api-1  |   Applying admin.0003_logentry_add_action_flag_choices... OK
+api-1  |   Applying contenttypes.0002_remove_content_type_name... OK
+api-1  |   Applying auth.0002_alter_permission_name_max_length... OK
+api-1  |   Applying auth.0003_alter_user_email_max_length... OK
+api-1  |   Applying auth.0004_alter_user_username_opts... OK
+api-1  |   Applying auth.0005_alter_user_last_login_null... OK
+api-1  |   Applying auth.0006_require_contenttypes_0002... OK
+api-1  |   Applying auth.0007_alter_validators_add_error_messages... OK
+api-1  |   Applying auth.0008_alter_user_username_max_length... OK
+api-1  |   Applying auth.0009_alter_user_last_name_max_length... OK
+api-1  |   Applying auth.0010_alter_group_name_max_length... OK
+api-1  |   Applying auth.0011_update_proxy_permissions... OK
+api-1  |   Applying auth.0012_alter_user_first_name_max_length... OK
+api-1  |   Applying ids.0001_initial... OK
+api-1  |   Applying sessions.0001_initial... OK
+api-1  | [2025-01-04 00:22:48 +0000] [76] [INFO] Starting gunicorn 23.0.0
+api-1  | [2025-01-04 00:22:48 +0000] [76] [INFO] Listening at: http://0.0.0.0:8000 (76)
+api-1  | [2025-01-04 00:22:48 +0000] [76] [INFO] Using worker: sync
+api-1  | [2025-01-04 00:22:48 +0000] [77] [INFO] Booting worker with pid: 77
 ```
 
 Лог воркера:
 
 ```shell
-docker-compose logs worker
+sudo docker compose logs worker
 ```
 
 ```text
-Logg
+worker-1  | User information: uid=0 euid=0 gid=0 egid=0
+worker-1  | 
+worker-1  |   warnings.warn(SecurityWarning(ROOT_DISCOURAGED.format(
+worker-1  |  
+worker-1  |  -------------- celery@0a10f82c8415 v5.4.0 (opalescent)
+worker-1  | --- ***** ----- 
+worker-1  | -- ******* ---- Linux-5.15.0-130-generic-x86_64-with-glibc2.36 2025-01-04 03:22:34
+worker-1  | - *** --- * --- 
+worker-1  | - ** ---------- [config]
+worker-1  | - ** ---------- .> app:         config:0x7f543c451df0
+worker-1  | - ** ---------- .> transport:   redis://redis:6379//
+worker-1  | - ** ---------- .> results:     redis://redis:6379/
+worker-1  | - *** --- * --- .> concurrency: 4 (prefork)
+worker-1  | -- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+worker-1  | --- ***** ----- 
+worker-1  |  -------------- [queues]
+worker-1  |                 .> celery           exchange=celery(direct) key=celery
+worker-1  |                 
+worker-1  | 
+worker-1  | [tasks]
+worker-1  |   . ids.tasks.process_dump_file
+
 ```
 
 <hr />
