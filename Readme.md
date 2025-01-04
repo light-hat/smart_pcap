@@ -1,6 +1,11 @@
 <h1 align="center"> Smart IDS </h1>
 
 <p align="center">
+<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.md">English</a>
+<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.ru.md">Русский</a>
+</p>
+
+<p align="center">
 <a href="https://github.com/light-hat/smart_ids/actions"><img alt="Unit test status" src="https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat&logo=python&logoColor=white"></a>
 <a href="https://github.com/light-hat/smart_ids/actions"><img alt="Unit test status" src="https://github.com/light-hat/smart_ids/workflows/Unit%20testing/badge.svg"></a>
 <a href="https://github.com/light-hat/smart_ids/actions"><img alt="Pylint status" src="https://github.com/light-hat/smart_ids/workflows/Pylint/badge.svg"></a>
