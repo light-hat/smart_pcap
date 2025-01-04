@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-Read this in other languages: 
+_Read this in other languages:_ 
 <a href="https://github.com/light-hat/smart_ids/blob/master/Readme.md">English</a>
 Русский
 </p>
