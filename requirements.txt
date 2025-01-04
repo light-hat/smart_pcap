@@ -11,3 +11,4 @@ torch
 tritonclient[http]
 numpy
 transformers
+django-prometheus
