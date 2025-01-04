@@ -12,6 +12,11 @@
 API для обнаружения атак в дампах сетевого трафика методами машинного обучения.
 </p>
 
+<p align="center">
+<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.md">English</a>
+<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.ru.md">Русский</a>
+</p>
+
 <h2 align="center"> Стек </h2>
 
 <p align="center">
