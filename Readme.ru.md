@@ -9,12 +9,13 @@
 </p>
 
 <p align="center">
+Read this in other languages: 
 <a href="https://github.com/light-hat/smart_ids/blob/master/Readme.md">English</a>
 Русский
 </p>
 
 <p align="center">
-Веб-сервис, который выявляет сетевые атаки методами ML. В проекте реализуется инференс с аппаратным ускорением на GPU, асинхронную обработку PCAP-дампов сетевого трафика, гибкий поиск по результатам обработки, мониторинг веб-сервиса и интеграцию с SIEM-системами (в будущем).
+Веб-сервис, который выявляет сетевые атаки методами ML. В проекте реализуется инференс с аппаратным ускорением на GPU, асинхронная обработка PCAP-дампов сетевого трафика, гибкий поиск по результатам обработки, мониторинг веб-сервиса и интеграцию с SIEM-системами (в будущем).
 </p>
 
 <h2 align="center"> Стек </h2>
@@ -23,10 +24,12 @@
 
 <img src="https://img.shields.io/badge/nVIDIA-%2376B900.svg?style=for-the-badge&logo=nVIDIA&logoColor=white">
 <img src="https://img.shields.io/badge/cuda-000000.svg?style=for-the-badge&logo=nVIDIA&logoColor=green">
+<img src="https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white">
 <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54">
 <img src="https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white">
 <img src="https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray">
 <img src="https://img.shields.io/badge/celery-%23a9cc54.svg?style=for-the-badge&logo=celery&logoColor=ddf4a4">
+<img src="https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white">
 <img src="https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white">
 <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white">
 <img src="https://img.shields.io/badge/grafana-%23F46800.svg?style=for-the-badge&logo=grafana&logoColor=white">
