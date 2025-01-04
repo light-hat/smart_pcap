@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-API for detecting attacks in network traffic using machine learning methods.
+API для обнаружения атак в дампах сетевого трафика методами машинного обучения.
 </p>
 
 <p align="center">
@@ -17,7 +17,7 @@ API for detecting attacks in network traffic using machine learning methods.
 <a href="https://github.com/light-hat/smart_ids/blob/master/Readme.ru.md">Русский</a>
 </p>
 
-<h2 align="center"> Tech stack </h2>
+<h2 align="center"> Стек </h2>
 
 <p align="center">
 
@@ -36,69 +36,69 @@ API for detecting attacks in network traffic using machine learning methods.
 
 </p>
 
-## Contents
+## Содержание
 
 <!-- TOC -->
-  * [Contents](#contents)
-  * [About model](#about-model)
-  * [Requirements](#requirements)
-    * [Hardware environment](#hardware-environment)
-    * [Software environment](#software-environment)
-  * [Deployment](#deployment)
-    * [Preparing the server](#preparing-the-server)
-    * [Configuration](#configuration)
-    * [Run](#run)
-  * [Operation](#operation)
-    * [API Documentation](#api-documentation)
-    * [Admin panel](#admin-panel)
+  * [Содержание](#содержание)
+  * [Пару слов о модели](#пару-слов-о-модели)
+  * [Требования](#требования)
+    * [Аппаратное окружение](#аппаратное-окружение)
+    * [Программное окружение](#программное-окружение)
+  * [Развёртывание](#развёртывание)
+    * [Подготовка сервера](#подготовка-сервера)
+    * [Конфигурирование](#конфигурирование)
+    * [Запуск проекта](#запуск-проекта)
+  * [Эксплуатация](#эксплуатация)
+    * [Документация API](#документация-api)
+    * [Административная панель](#административная-панель)
 <!-- TOC -->
 
-## About model
+## Пару слов о модели
 
-The [rdpahalavan/bert-network-packet-flow-header-payload](https://huggingface.co/rdpahalavan/bert-network-packet-flow-header-payload) ML model was used to detect attacks.
+Для инференса взята модель [rdpahalavan/bert-network-packet-flow-header-payload](https://huggingface.co/rdpahalavan/bert-network-packet-flow-header-payload) на Hugging Face.
 
-## Requirements
+## Требования
 
-### Hardware environment
+### Аппаратное окружение
 
-| Requirement | Minimum        | Recommended  |
-|-------------|----------------|--------------|
-| CPU         | `6 cores`      | `12 cores`   |
-| RAM         | `16 GB`        | `32 GB`      |
-| Disk        | `80 GB`        | `150 GB`     |
-| GPU         | `8-16 GB VRAM` | `32 GB VRAM` |
+| Требование | Минимум         | Рекомендуется  |
+|------------|-----------------|----------------|
+| CPU        | `6 ядер`        | `12 ядер`      |
+| RAM        | `16 Гб`         | `32 Гб`        |
+| Диск       | `80 Гб`         | `150 Гб`       |
+| GPU        | `8-16 Гб VRAM`  | `32 Гб VRAM`   |
 
-### Software environment
+### Программное окружение
 
 > [!TIP]
-> The operating system, in principle, does not matter if the requirements for the software and hardware environment are met.
+> Операционная система в принципе не имеет значения, если соблюдены требования к программному и аппаратному окружению.
 
-| Requirement              | Minimum version     | Recommended version            |
-|--------------------------|---------------------|--------------------------------|
-| Docker                   | `19.03`             | `20.10 or higher`              |
-| Docker Compose           | `1.27`              | `1.29 or higher`               |
-| NVIDIA drivers           | `418.87`            | `latest stable version`        |
-| CUDA                     | `11.0`              | `latest stable version`        |
-| NVIDIA Container Toolkit | `1.0`               | `latest stable version`        |
+| Требование               | Минимальная версия | Рекомендуемая версия           |
+|--------------------------|--------------------|--------------------------------|
+| Docker                   | `19.03`            | `20.10 или выше`               |
+| Docker Compose           | `1.27`             | `1.29 или выше`                |
+| NVIDIA драйверы          | `418.87`           | `последняя стабильная версия`  |
+| CUDA                     | `11.0`             | `последняя стабильная версия`  |
+| NVIDIA Container Toolkit | `1.0`              | `последняя стабильная версия`  |
 
-## Deployment
+## Развёртывание
 
 > [!NOTE]
-> Testing was carried out on a server running Ubuntu 22.04 with a Tesla T4 GPU.
+> Тестирование проводилось на сервере с Ubuntu 22.04 с GPU Tesla T4.
 
-### Preparing the server
+### Подготовка сервера
 
 > [!TIP]
-> First, you should install Docker and Docker Compose on your server using this [instruction](https://docs.docker.com/engine/install/ubuntu/) from the official Docker website.
+> Для начала стоит установить Docker и Docker Compose на ваш сервер по этой [инструкции](https://docs.docker.com/engine/install/ubuntu/) с официального сайта Docker.
 
-When `Docker` is installed, check your GPU drivers:
+Когда установлен `Docker`, проверьте драйвера видеокарты:
 
 ```shell
 nvidia-smi
 ```
 
 <details>
-  <summary>👀 What should be in the answer?</summary>
+  <summary>👀 Что примерно должно быть в ответе</summary>
 
 <hr />
 
@@ -122,24 +122,24 @@ Sat Jan  4 01:37:28 2025
 </details>
 
 <details>
-  <summary>👀 How to install drivers for GPU?</summary>
+  <summary>👀 Как поставить драйвера на GPU</summary>
 
 <hr />
 
-Install tools for compiling drivers and kernel headers:
+Устанавливаем инструменты для компиляции драйверов и заголовки ядра:
 
 ```shell
 sudo apt update
 sudo apt-get install build-essential linux-headers-$(uname -r)
 ```
 
-Next, find the available driver versions:
+Ищем доступные версии драйвера:
 
 ```shell
 ubuntu-drivers devices
 ```
 
-Find a similar line in the output:
+Находим в выводе похожую строчку:
 
 ```text
 ...
@@ -147,19 +147,19 @@ driver   : nvidia-driver-535 - distro non-free recommended
 ...
 ```
 
-This is the driver version you need to install. Let's do this:
+Это версия драйвера, которую вам нужно установить. Делаем это:
 
 ```shell
 sudo apt-get install nvidia-driver-535
 ```
 
-Then restart the server:
+Затем перезапускаем сервер:
 
 ```shell
 sudo reboot
 ```
 
-After rebooting, check your GPU drivers again:
+После перезагрузки снова проверяем драйвера GPU:
 
 ```shell
 nvidia-smi
@@ -169,14 +169,14 @@ nvidia-smi
 
 </details>
 
-After that, check if the `NVIDIA Container Toolkit` is installed on the server:
+После этого проверьте, установлен ли на сервере `NVIDIA Container Toolkit`:
 
 ```shell
 dpkg -l | grep nvidia-container-toolkit
 ```
 
 <details>
-  <summary>👀 What should be in the answer?</summary>
+  <summary>👀 Что примерно должно быть в ответе</summary>
 
 <hr />
 
@@ -191,18 +191,18 @@ ii  nvidia-container-toolkit-base     1.17.3-1          amd64     NVIDIA Contain
 </details>
 
 > [!TIP]
-> If this answer is empty, here is a [manual](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) from the official website on how to install NVIDIA Container Toolkit.
+> Если в этом ответе пусто, вот [мануал](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) c официального сайта как установить NVIDIA Container Toolkit.
 
-### Configuration
+### Конфигурирование
 
-First, clone the repository:
+Для начала клонируйте репозиторий:
 
 ```shell
 git clone https://github.com/light-hat/smart_ids
 cd smart_ids
 ```
 
-In the root of the repository, create a `.env` file with the following content:
+В корне репозитория создайте `.env` файл со следующим содержимым:
 
 ```
 API_URL=127.0.0.1
@@ -216,46 +216,46 @@ GF_SECURITY_ADMIN_PASSWORD=admin
 GF_SECURITY_ADMIN_USER=admin
 ```
 
-Environment variables in the configuration:
+Переменные окружения в конфигурации:
 
-- `API_URL`: URL where the service will be deployed;
+- `API_URL`: адрес, на котором будет развёрнут сервис;
 
-- `API_PORT`: port on which the service will receive requests;
+- `API_PORT`: порт, на котором будет принимать запросы сервис;
 
-- `POSTGRES_HOST`: database host (service name in the docker compose stack);
+- `POSTGRES_HOST`: хост базы данных (имя сервиса в стеке приложений);
 
-- `POSTGRES_PORT`: database port;
+- `POSTGRES_PORT`: порт базы данных;
 
-- `POSTGRES_USER`: database user;
+- `POSTGRES_USER`: пользователь базы данных;
 
-- `POSTGRES_PASSWORD`: database password;
+- `POSTGRES_PASSWORD`: пароль от базы данных;
 
-- `POSTGRES_DB`: name of the database used by the service;
+- `POSTGRES_DB`: имя базы данных, используемой сервисом;
 
-- `GF_SECURITY_ADMIN_PASSWORD`: username for authorization in Grafana;
+- `GF_SECURITY_ADMIN_PASSWORD`: имя пользователя для авторизации в Grafana;
 
-- `GF_SECURITY_ADMIN_USER`: password for authorization in Grafana;
+- `GF_SECURITY_ADMIN_USER`: пароль для авторизации в Grafana.
 
-You can do this automatically via a script:
+Можете сделать это автоматически через скрипт:
 
 ```shell
 ./configure.sh
 ```
 
-### Run
+### Запуск проекта
 
-Start the application stack on Docker with the following command:
+Запустите стек приложений на Docker следующей командой:
 
 ```shell
 docker-compose up -d --build
 ```
 
 <details>
-  <summary>👀 What does a healthy log look like at startup?</summary>
+  <summary>👀 Как выглядит здоровый лог при запуске</summary>
 
 <hr />
 
-Inference log:
+Лог инференса:
 
 ```shell
 sudo docker compose logs triton
@@ -338,7 +338,7 @@ triton-1  | I0104 00:22:30.674047 1 http_server.cc:3477] Started HTTPService at 
 triton-1  | I0104 00:22:30.715444 1 http_server.cc:184] Started Metrics Service at 0.0.0.0:8002
 ```
 
-API log:
+Лог API:
 
 ```shell
 sudo docker compose logs api
@@ -379,7 +379,7 @@ api-1  | [2025-01-04 00:22:48 +0000] [76] [INFO] Using worker: sync
 api-1  | [2025-01-04 00:22:48 +0000] [77] [INFO] Booting worker with pid: 77
 ```
 
-Worker log:
+Лог воркера:
 
 ```shell
 sudo docker compose logs worker
@@ -414,21 +414,21 @@ worker-1  |   . ids.tasks.process_dump_file
 
 </details>
 
-## Operation
+## Эксплуатация
 
-### API Documentation
+### Документация API
 
-API documented using Swagger (`drf-spectacular`).
+API задокументирован при помощи Swagger (`drf-spectacular`).
 
-API testing: `http://127.0.0.1/api/docs/`
+Тестирование API: `http://127.0.0.1/api/docs/`
 
 YAML: `http://127.0.0.1/api/schema/`
 
-### Admin panel
+### Административная панель
 
-The service admin area is available at `http://127.0.0.1/admin`.
+Админка сервиса доступна по адресу `http://127.0.0.1/admin`.
 
-First login credentials: `admin:admin`.
+Учётные данные для первого входа: `admin:admin`.
 
 > [!IMPORTANT]
-> It is recommended to change the credentials immediately after deployment to more stable ones.
+> Учётные данные рекомендуется сменить сразу после развёртывания на более устойчивые.
