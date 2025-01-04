@@ -14,7 +14,7 @@
 
 <p align="center">
 <i>Read this in other languages: </i> 
-<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.md">English</a>
+<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.md">English</a>,
 Русский.
 </p>
 

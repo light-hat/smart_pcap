@@ -14,7 +14,7 @@ A web service that detects network attacks using ML methods. The project impleme
 
 <p align="center">
 <i>Read this in other languages: </i> 
-English
+English,
 <a href="https://github.com/light-hat/smart_ids/blob/master/Readme.ru.md">Русский</a>.
 </p>
 
