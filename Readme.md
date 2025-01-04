@@ -8,11 +8,11 @@
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 </p>
 
-<p align="center"><i>
-Read this in other languages: 
+<p align="center">
+<i>Read this in other languages: </i> 
 English
 <a href="https://github.com/light-hat/smart_ids/blob/master/Readme.ru.md">Русский</a>
-</i></p>
+</p>
 
 <p align="center">
 A web service that detects network attacks using ML methods. The project implements GPU-accelerated inference, asynchronous processing of PCAP dumps of network traffic, flexible search based on processing results, web service monitoring and integration with SIEM systems (in the future).
