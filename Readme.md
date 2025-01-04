@@ -10,12 +10,12 @@
 </p>
 
 <p align="center">
-A web service that detects network attacks using ML methods. The project implements GPU-accelerated inference, asynchronous processing of PCAP dumps of network traffic, flexible search based on processing results, web service monitoring and integration with SIEM systems (in the future).
+English
+<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.ru.md">Русский</a>
 </p>
 
 <p align="center">
-<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.md">English</a>
-<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.ru.md">Русский</a>
+A web service that detects network attacks using ML methods. The project implements GPU-accelerated inference, asynchronous processing of PCAP dumps of network traffic, flexible search based on processing results, web service monitoring and integration with SIEM systems (in the future).
 </p>
 
 <h2 align="center"> Tech stack </h2>
@@ -62,7 +62,7 @@ A Jupyter Notebook with model details is [here](https://github.com/TPs-ESIR-S9/P
 
 The model has 24 output classes:
 
-```json
+```python
 ['Analysis',
  'Backdoor',
  'Bot',
