@@ -34,19 +34,18 @@ API for detecting attacks in network traffic using machine learning methods.
 ## Contents
 
 <!-- TOC -->
-  * [Содержание](#содержание)
-  * [Пару слов о модели](#пару-слов-о-модели)
-  * [Требования](#требования)
-    * [Аппаратное окружение](#аппаратное-окружение)
-    * [Программное окружение](#программное-окружение)
-  * [Развёртывание](#развёртывание)
-    * [Подготовка сервера](#подготовка-сервера)
-    * [Конфигурирование](#конфигурирование)
-    * [Запуск проекта](#запуск-проекта)
-  * [Эксплуатация](#эксплуатация)
-    * [Документация API](#документация-api)
-    * [Административная панель](#административная-панель)
-    * [Мониторинг](#мониторинг)
+  * [Contents](#contents)
+  * [About model](#about-model)
+  * [Requirements](#requirements)
+    * [Hardware environment](#hardware-environment)
+    * [Software environment](#software-environment)
+  * [Deployment](#deployment)
+    * [Preparing the server](#preparing-the-server)
+    * [Configuration](#configuration)
+    * [Run](#run)
+  * [Operation](#operation)
+    * [API Documentation](#api-documentation)
+    * [Admin panel](#admin-panel)
 <!-- TOC -->
 
 ## About model
