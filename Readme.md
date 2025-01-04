@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-API for detecting attacks in network traffic using machine learning methods.
+A web service that detects network attacks using ML methods. The project implements GPU-accelerated inference, asynchronous processing of PCAP dumps of network traffic, flexible search based on processing results, web service monitoring and integration with SIEM systems (in the future).
 </p>
 
 <p align="center">
@@ -57,6 +57,37 @@ API for detecting attacks in network traffic using machine learning methods.
 ## About model
 
 The [rdpahalavan/bert-network-packet-flow-header-payload](https://huggingface.co/rdpahalavan/bert-network-packet-flow-header-payload) ML model was used to detect attacks.
+
+A Jupyter Notebook with model details is [here](https://github.com/TPs-ESIR-S9/PcapFileAnalysis/blob/main/NetworkPcapAnalysis.ipynb).
+
+The model has 24 output classes:
+
+```json
+['Analysis',
+ 'Backdoor',
+ 'Bot',
+ 'DDoS',
+ 'DoS',
+ 'DoS GoldenEye',
+ 'DoS Hulk',
+ 'DoS SlowHTTPTest',
+ 'DoS Slowloris',
+ 'Exploits',
+ 'FTP Patator',
+ 'Fuzzers',
+ 'Generic',
+ 'Heartbleed',
+ 'Infiltration',
+ 'Normal',
+ 'Port Scan',
+ 'Reconnaissance',
+ 'SSH Patator',
+ 'Shellcode',
+ 'Web Attack - Brute Force',
+ 'Web Attack - SQL Injection',
+ 'Web Attack - XSS',
+ 'Worms']
+```
 
 ## Requirements
 

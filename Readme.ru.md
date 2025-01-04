@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-API для обнаружения атак в дампах сетевого трафика методами машинного обучения.
+Веб-сервис, который выявляет сетевые атаки методами ML. В проекте реализуется инференс с аппаратным ускорением на GPU, асинхронную обработку PCAP-дампов сетевого трафика, гибкий поиск по результатам обработки, мониторинг веб-сервиса и интеграцию с SIEM-системами (в будущем).
 </p>
 
 <p align="center">
@@ -56,6 +56,37 @@ API для обнаружения атак в дампах сетевого тр
 ## Пару слов о модели
 
 Для инференса взята модель [rdpahalavan/bert-network-packet-flow-header-payload](https://huggingface.co/rdpahalavan/bert-network-packet-flow-header-payload) на Hugging Face.
+
+Ноутбук с подробностями о модели можно найти [здесь](https://github.com/TPs-ESIR-S9/PcapFileAnalysis/blob/main/NetworkPcapAnalysis.ipynb).
+
+Модель классифицирует пакеты на 24 класса:
+
+```json
+['Analysis',
+ 'Backdoor',
+ 'Bot',
+ 'DDoS',
+ 'DoS',
+ 'DoS GoldenEye',
+ 'DoS Hulk',
+ 'DoS SlowHTTPTest',
+ 'DoS Slowloris',
+ 'Exploits',
+ 'FTP Patator',
+ 'Fuzzers',
+ 'Generic',
+ 'Heartbleed',
+ 'Infiltration',
+ 'Normal',
+ 'Port Scan',
+ 'Reconnaissance',
+ 'SSH Patator',
+ 'Shellcode',
+ 'Web Attack - Brute Force',
+ 'Web Attack - SQL Injection',
+ 'Web Attack - XSS',
+ 'Worms']
+```
 
 ## Требования
 
