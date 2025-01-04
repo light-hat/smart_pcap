@@ -9,11 +9,11 @@
 <a href="https://app.fossa.com/projects/git%2Bgithub.com%2Flight-hat%2Fsmart_ids?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Flight-hat%2Fsmart_ids.svg?type=shield"/></a>
 </p>
 
-<p align="center"><i>
-Read this in other languages: 
+<p align="center">
+<i>Read this in other languages: </i> 
 English
 <a href="https://github.com/light-hat/smart_ids/blob/master/Readme.ru.md">Русский</a>
-</i></p>
+</p>
 
 <p align="center">
 A web service that detects network attacks using ML methods. The project implements GPU-accelerated inference, asynchronous processing of PCAP dumps of network traffic, flexible search based on processing results, web service monitoring and integration with SIEM systems (in the future).

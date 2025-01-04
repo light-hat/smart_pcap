@@ -8,11 +8,11 @@
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 </p>
 
-<p align="center"><i>
-Read this in other languages: 
+<p align="center">
+<i>Read this in other languages: </i> 
 <a href="https://github.com/light-hat/smart_ids/blob/master/Readme.md">English</a>
 Русский
-</i></p>
+</p>
 
 <p align="center">
 Веб-сервис, который выявляет сетевые атаки методами ML. В проекте реализуется инференс с аппаратным ускорением на GPU, асинхронная обработка PCAP-дампов сетевого трафика, гибкий поиск по результатам обработки, мониторинг веб-сервиса и интеграцию с SIEM-системами (в будущем).
