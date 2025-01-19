@@ -6,6 +6,7 @@
 <a href="https://github.com/light-hat/smart_ids/actions"><img alt="Pylint status" src="https://github.com/light-hat/smart_ids/workflows/Pylint/badge.svg"></a>
 <a href="https://github.com/light-hat/smart_ids/actions"><img alt="Bandit SAST status" src="https://github.com/light-hat/smart_ids/workflows/SAST/badge.svg"></a>
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+<a href="https://app.fossa.com/projects/git%2Bgithub.com%2Flight-hat%2Fsmart_ids?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Flight-hat%2Fsmart_ids.svg?type=shield"/></a>
 </p>
 
 <p align="center">
@@ -432,3 +433,7 @@ First login credentials: `admin:admin`.
 
 > [!IMPORTANT]
 > It is recommended to change the credentials immediately after deployment to more stable ones.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flight-hat%2Fsmart_ids.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Flight-hat%2Fsmart_ids?ref=badge_large)
