@@ -1,3 +1,7 @@
+"""
+Скрипт для тестирования инференса.
+"""
+
 import tritonclient.http as httpclient
 import numpy as np
 from transformers import DistilBertTokenizer
@@ -7,6 +11,9 @@ MODEL_NAME = "distilbert_classifier"
 
 
 def prepare_input(text):
+    """
+    Токенизация входных данных.
+    """
     tokenizer = DistilBertTokenizer.from_pretrained(
         "rdpahalavan/bert-network-packet-flow-header-payload"
     )
@@ -17,11 +24,18 @@ def prepare_input(text):
 
 
 def softmax(logits):
+    """
+    Интерпретация результатов инференса модели.
+    """
     exp_logits = np.exp(logits - np.max(logits))
     return exp_logits / np.sum(exp_logits, axis=-1, keepdims=True)
 
 
 def main():
+    """
+    Основная логика скрипта.
+    """
+
     try:
         id2label = {
             0: "Analysis",
