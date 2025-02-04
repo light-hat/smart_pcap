@@ -6,10 +6,11 @@ class DumpCreateSerializer(serializers.ModelSerializer):
     """
     Сериализатор для создания дампа.
     """
+
     class Meta:
         model = Dump
-        fields = ('id', 'name', 'details', 'source')
-        read_only_fields = ('state', )
+        fields = ("id", "name", "details", "source")
+        read_only_fields = ("state",)
 
 
 class DumpUpdateSerializer(serializers.ModelSerializer):
@@ -19,8 +20,8 @@ class DumpUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Dump
-        fields = ('id', 'name', 'details')
-        read_only_fields = ('state', )
+        fields = ("id", "name", "details")
+        read_only_fields = ("state",)
 
 
 class HandledPacketSerializer(serializers.ModelSerializer):
@@ -30,4 +31,18 @@ class HandledPacketSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = HandledPacket
-        fields = ('id', 'dump', 'label', 'timestamp', 'source_ip', 'destination_ip', 'source_port', 'destination_port', 'ip_length', 'ip_ttl', 'ip_tos', 'tcp_data_offset', 'tcp_flags')
+        fields = (
+            "id",
+            "dump",
+            "label",
+            "timestamp",
+            "source_ip",
+            "destination_ip",
+            "source_port",
+            "destination_port",
+            "ip_length",
+            "ip_ttl",
+            "ip_tos",
+            "tcp_data_offset",
+            "tcp_flags",
+        )

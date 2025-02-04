@@ -7,19 +7,19 @@ MODEL_NAME = "distilbert_classifier"
 
 
 def prepare_input(text):
-    tokenizer = DistilBertTokenizer.from_pretrained("rdpahalavan/bert-network-packet-flow-header-payload")
+    tokenizer = DistilBertTokenizer.from_pretrained(
+        "rdpahalavan/bert-network-packet-flow-header-payload"
+    )
     inputs = tokenizer(
-        text,
-        return_tensors="np",
-        padding="max_length",
-        truncation=True,
-        max_length=512
+        text, return_tensors="np", padding="max_length", truncation=True, max_length=512
     )
     return inputs["input_ids"], inputs["attention_mask"]
+
 
 def softmax(logits):
     exp_logits = np.exp(logits - np.max(logits))
     return exp_logits / np.sum(exp_logits, axis=-1, keepdims=True)
+
 
 def main():
     try:
@@ -47,7 +47,7 @@ def main():
             20: "Web Attack - Brute Force",
             21: "Web Attack - SQL Injection",
             22: "Web Attack - XSS",
-            23: "Worms"
+            23: "Worms",
         }
 
         client = httpclient.InferenceServerClient(url=TRITON_SERVER_URL)

@@ -4,7 +4,6 @@
 
 import uuid
 
-from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 from django.db import models
 
@@ -21,12 +20,8 @@ class Dump(models.Model):
     )
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    #user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(
-        verbose_name="Название дампа",
-        max_length=100,
-        null=True,
-        blank=True
+        verbose_name="Название дампа", max_length=100, null=True, blank=True
     )
     source = models.FileField(
         verbose_name="Дамп",
@@ -40,9 +35,7 @@ class Dump(models.Model):
         default="processing",
     )
     details = models.TextField(
-        verbose_name="Дополнительная информация",
-        null=True,
-        blank=True
+        verbose_name="Дополнительная информация", null=True, blank=True
     )
     created = models.DateTimeField(verbose_name="Дата загрузки", auto_now_add=True)
 
@@ -72,7 +65,7 @@ class HandledPacket(models.Model):
     ip_length = models.IntegerField(verbose_name="Длина IP-пакета")
     ip_ttl = models.IntegerField(verbose_name="Time to Live (TTL)")
     ip_tos = models.IntegerField(verbose_name=" Type of Service (ToS)")
-    #payload = models.TextField(verbose_name="Полезная нагрузка")
+    # payload = models.TextField(verbose_name="Полезная нагрузка")
     tcp_data_offset = models.IntegerField(verbose_name=" Смещение данных TCP")
     tcp_flags = models.CharField(verbose_name="Флаги TCP", max_length=15)
     inference_input = models.TextField(verbose_name="Данные для инференса")

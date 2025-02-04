@@ -9,8 +9,12 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-from ids.models import (Dump, HandledPacket)
-from ids.serializers import (DumpCreateSerializer, DumpUpdateSerializer, HandledPacketSerializer)
+from ids.models import Dump, HandledPacket
+from ids.serializers import (
+    DumpCreateSerializer,
+    DumpUpdateSerializer,
+    HandledPacketSerializer,
+)
 from rest_framework.parsers import MultiPartParser
 from drf_spectacular.utils import extend_schema
 from ids.tasks import process_dump_file
@@ -24,6 +28,7 @@ class DumpListCreate(ListCreateAPIView):
     API-обработчики для получения списка и
     создания объектов дампа.
     """
+
     queryset = Dump.objects.all()
     serializer_class = DumpCreateSerializer
     parser_classes = [MultiPartParser]
@@ -39,23 +44,23 @@ class DumpListCreate(ListCreateAPIView):
 
     @extend_schema(
         request={
-            'multipart/form-data': {
-                'type': 'object',
-                'properties': {
-                    'name': {
-                        'type': 'string',
-                        'description': 'Название',
+            "multipart/form-data": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Название",
                     },
-                    'details': {
-                        'type': 'string',
-                        'description': 'Описание',
+                    "details": {
+                        "type": "string",
+                        "description": "Описание",
                     },
-                    'source': {
-                        'type': 'string',
-                        'format': 'binary',
+                    "source": {
+                        "type": "string",
+                        "format": "binary",
                     },
                 },
-                'required': ['source'],
+                "required": ["source"],
             }
         }
     )
@@ -74,19 +79,22 @@ class DumpDetailUpdateDelete(RetrieveUpdateDestroyAPIView):
     API-обработчики для детального просмотра,
     изменения и удаления объекта дампа.
     """
+
     queryset = Dump.objects.all()
     serializer_class = DumpUpdateSerializer
+
 
 class HandledPacketDetailUpdateDelete(RetrieveUpdateDestroyAPIView):
     """
     API-обработчики для детального просмотра,
     изменения и удаления объекта обработанного пакета.
     """
+
     queryset = Dump.objects.all()
     serializer_class = HandledPacketSerializer
     pagination_class = PageNumberPagination
     page_size = 25
-    http_method_names = ['get']
+    http_method_names = ["get"]
 
     def get(self, request, pk=None):
         """

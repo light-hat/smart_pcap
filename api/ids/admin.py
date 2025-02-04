@@ -28,6 +28,23 @@ class PacketAdmin(admin.ModelAdmin):
     Конфигурация админ-панели для модели Packet.
     """
 
-    list_display = ("id", "dump", "label", "timestamp", "source_ip", "destination_ip", "source_port", "destination_port", "ip_length", "ip_ttl", "ip_tos", "tcp_data_offset", "tcp_flags")
+    list_display = (
+        "id",
+        "dump",
+        "label",
+        "timestamp",
+        "source_ip",
+        "destination_ip",
+        "source_port",
+        "destination_port",
+        "ip_length",
+        "ip_ttl",
+        "ip_tos",
+        "tcp_data_offset",
+        "tcp_flags",
+    )
     list_display_links = ("id",)
-    list_filter = ("dump", "label",)
+    list_filter = (
+        "dump",
+        "label",
+    )
