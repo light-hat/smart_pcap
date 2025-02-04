@@ -10,12 +10,13 @@
 </p>
 
 <p align="center">
-API for detecting attacks in network traffic using machine learning methods.
+A web service that detects network attacks using ML methods. The project implements GPU-accelerated inference, asynchronous processing of PCAP dumps of network traffic, flexible search based on processing results, web service monitoring and integration with SIEM systems (in the future).
 </p>
 
 <p align="center">
-<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.md">English</a>
-<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.ru.md">Русский</a>
+<i>Read this in other languages: </i> 
+English,
+<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.ru.md">Русский</a>.
 </p>
 
 <h2 align="center"> Tech stack </h2>
@@ -28,6 +29,7 @@ API for detecting attacks in network traffic using machine learning methods.
 <img src="https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white">
 <img src="https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray">
 <img src="https://img.shields.io/badge/celery-%23a9cc54.svg?style=for-the-badge&logo=celery&logoColor=ddf4a4">
+<img src="https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white">
 <img src="https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white">
 <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white">
 <img src="https://img.shields.io/badge/grafana-%23F46800.svg?style=for-the-badge&logo=grafana&logoColor=white">
@@ -58,29 +60,45 @@ API for detecting attacks in network traffic using machine learning methods.
 
 The [rdpahalavan/bert-network-packet-flow-header-payload](https://huggingface.co/rdpahalavan/bert-network-packet-flow-header-payload) ML model was used to detect attacks.
 
+A Jupyter Notebook with model details is [here](https://github.com/TPs-ESIR-S9/PcapFileAnalysis/blob/main/NetworkPcapAnalysis.ipynb).
+
+The model has 24 output classes:
+
+```python
+['Analysis',
+ 'Backdoor',
+ 'Bot',
+ 'DDoS',
+ 'DoS',
+ 'DoS GoldenEye',
+ 'DoS Hulk',
+ 'DoS SlowHTTPTest',
+ 'DoS Slowloris',
+ 'Exploits',
+ 'FTP Patator',
+ 'Fuzzers',
+ 'Generic',
+ 'Heartbleed',
+ 'Infiltration',
+ 'Normal',
+ 'Port Scan',
+ 'Reconnaissance',
+ 'SSH Patator',
+ 'Shellcode',
+ 'Web Attack - Brute Force',
+ 'Web Attack - SQL Injection',
+ 'Web Attack - XSS',
+ 'Worms']
+```
+
 ## Requirements
 
-### Hardware environment
-
-| Requirement | Minimum        | Recommended  |
-|-------------|----------------|--------------|
-| CPU         | `6 cores`      | `12 cores`   |
-| RAM         | `16 GB`        | `32 GB`      |
-| Disk        | `80 GB`        | `150 GB`     |
-| GPU         | `8-16 GB VRAM` | `32 GB VRAM` |
-
-### Software environment
-
-> [!TIP]
-> The operating system, in principle, does not matter if the requirements for the software and hardware environment are met.
-
-| Requirement              | Minimum version     | Recommended version            |
-|--------------------------|---------------------|--------------------------------|
-| Docker                   | `19.03`             | `20.10 or higher`              |
-| Docker Compose           | `1.27`              | `1.29 or higher`               |
-| NVIDIA drivers           | `418.87`            | `latest stable version`        |
-| CUDA                     | `11.0`              | `latest stable version`        |
-| NVIDIA Container Toolkit | `1.0`               | `latest stable version`        |
+| Requirement | Value        |
+|-------------|--------------|
+| CPU         | `4 cores`    |
+| RAM         | `32 GB`      |
+| Disk        | `150 GB`     |
+| GPU         | `16 GB VRAM` |
 
 ## Deployment
 

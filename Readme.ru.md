@@ -9,12 +9,13 @@
 </p>
 
 <p align="center">
-API для обнаружения атак в дампах сетевого трафика методами машинного обучения.
+Веб-сервис, который выявляет сетевые атаки методами ML. В проекте реализуется инференс с аппаратным ускорением на GPU, асинхронная обработка PCAP-дампов сетевого трафика, гибкий поиск по результатам обработки, мониторинг веб-сервиса и интеграцию с SIEM-системами (в будущем).
 </p>
 
 <p align="center">
-<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.md">English</a>
-<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.ru.md">Русский</a>
+<i>Read this in other languages: </i> 
+<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.md">English</a>,
+Русский.
 </p>
 
 <h2 align="center"> Стек </h2>
@@ -27,6 +28,7 @@ API для обнаружения атак в дампах сетевого тр
 <img src="https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white">
 <img src="https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray">
 <img src="https://img.shields.io/badge/celery-%23a9cc54.svg?style=for-the-badge&logo=celery&logoColor=ddf4a4">
+<img src="https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white">
 <img src="https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white">
 <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white">
 <img src="https://img.shields.io/badge/grafana-%23F46800.svg?style=for-the-badge&logo=grafana&logoColor=white">
@@ -57,29 +59,45 @@ API для обнаружения атак в дампах сетевого тр
 
 Для инференса взята модель [rdpahalavan/bert-network-packet-flow-header-payload](https://huggingface.co/rdpahalavan/bert-network-packet-flow-header-payload) на Hugging Face.
 
+Ноутбук с подробностями о модели можно найти [здесь](https://github.com/TPs-ESIR-S9/PcapFileAnalysis/blob/main/NetworkPcapAnalysis.ipynb).
+
+Модель классифицирует пакеты на 24 класса:
+
+```python
+['Analysis',
+ 'Backdoor',
+ 'Bot',
+ 'DDoS',
+ 'DoS',
+ 'DoS GoldenEye',
+ 'DoS Hulk',
+ 'DoS SlowHTTPTest',
+ 'DoS Slowloris',
+ 'Exploits',
+ 'FTP Patator',
+ 'Fuzzers',
+ 'Generic',
+ 'Heartbleed',
+ 'Infiltration',
+ 'Normal',
+ 'Port Scan',
+ 'Reconnaissance',
+ 'SSH Patator',
+ 'Shellcode',
+ 'Web Attack - Brute Force',
+ 'Web Attack - SQL Injection',
+ 'Web Attack - XSS',
+ 'Worms']
+```
+
 ## Требования
 
-### Аппаратное окружение
-
-| Требование | Минимум         | Рекомендуется  |
-|------------|-----------------|----------------|
-| CPU        | `6 ядер`        | `12 ядер`      |
-| RAM        | `16 Гб`         | `32 Гб`        |
-| Диск       | `80 Гб`         | `150 Гб`       |
-| GPU        | `8-16 Гб VRAM`  | `32 Гб VRAM`   |
-
-### Программное окружение
-
-> [!TIP]
-> Операционная система в принципе не имеет значения, если соблюдены требования к программному и аппаратному окружению.
-
-| Требование               | Минимальная версия | Рекомендуемая версия           |
-|--------------------------|--------------------|--------------------------------|
-| Docker                   | `19.03`            | `20.10 или выше`               |
-| Docker Compose           | `1.27`             | `1.29 или выше`                |
-| NVIDIA драйверы          | `418.87`           | `последняя стабильная версия`  |
-| CUDA                     | `11.0`             | `последняя стабильная версия`  |
-| NVIDIA Container Toolkit | `1.0`              | `последняя стабильная версия`  |
+| Зависимость | Значение     |
+|-------------|--------------|
+| CPU         | `4 ядра`     |
+| RAM         | `32 Гб`      |
+| Disk        | `150 Гб`     |
+| GPU         | `16 Гб VRAM` |
 
 ## Развёртывание
 
