@@ -44,8 +44,6 @@ English,
   * [Contents](#contents)
   * [About model](#about-model)
   * [Requirements](#requirements)
-    * [Hardware environment](#hardware-environment)
-    * [Software environment](#software-environment)
   * [Deployment](#deployment)
     * [Preparing the server](#preparing-the-server)
     * [Configuration](#configuration)
@@ -53,6 +51,7 @@ English,
   * [Operation](#operation)
     * [API Documentation](#api-documentation)
     * [Admin panel](#admin-panel)
+  * [License](#license)
 <!-- TOC -->
 
 ## About model
