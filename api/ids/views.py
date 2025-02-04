@@ -5,7 +5,7 @@ API эндпоинты для дампов.
 import logging
 
 from drf_spectacular.utils import extend_schema
-from ids.models import (Dump, HandledPacket)
+from ids.models import Dump
 from ids.serializers import *
 from ids.serializers import (
     DumpCreateSerializer,
@@ -13,8 +13,6 @@ from ids.serializers import (
     HandledPacketSerializer,
 )
 from ids.tasks import process_dump_file
-from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.generics import (ListCreateAPIView, RetrieveUpdateDestroyAPIView)
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.parsers import MultiPartParser
