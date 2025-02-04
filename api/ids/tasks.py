@@ -2,16 +2,17 @@
 Асинхронные Celery-таски для обработки дампов памяти.
 """
 
+import os
+from datetime import datetime
+from typing import Union
+
+import numpy as np
+import tritonclient.http as httpclient
 from celery import shared_task
+from django.conf import settings
 from ids.models import Dump, HandledPacket
 from scapy.all import *
-from datetime import datetime
-import tritonclient.http as httpclient
-import numpy as np
 from transformers import DistilBertTokenizer
-from typing import Union
-from django.conf import settings
-import os
 
 TRITON_SERVER_URL = "triton:8000"
 
@@ -207,7 +208,7 @@ def process_dump_file(dump_id: str) -> None:
 
         with PcapReader(dump_file) as pcap:
             for pkt in pcap:
-                if IP in pkt and TCP in pkt: # IPv4 and TCP
+                if IP in pkt and TCP in pkt:  # IPv4 and TCP
                     packet_data = processing_packet_conversion(pkt)
                     if packet_data:
                         packet_ml_label = infer_packet_data(packet_data["final_data"])
@@ -241,5 +242,5 @@ def process_dump_file(dump_id: str) -> None:
         print(f"Сообщение исключения: {e}")
         print(f"Информация об исключении: {repr(e)}")
         print(
-            f"Путь к файлу и строка, где произошло исключение: {e.__traceback__.tb_frame.f_code.co_filename}:{e.__traceback__.tb_lineno}"
+            f"Путь к файлу и строка, где произошло исключение: {e.__traceback__.tb_frame.f_code.co_filename}:{e.__traceback__.tb_lineno}"  # pylint: disable=line-too-long
         )

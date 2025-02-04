@@ -3,7 +3,6 @@
 """
 
 from django.contrib import admin
-
 from ids.models import Dump, HandledPacket
 
 admin.site.site_title = "Smart IDS"

@@ -1,3 +1,7 @@
+"""
+Скрипт для загрузки модели с Hugging Face.
+"""
+
 import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 

@@ -1,2 +1,0 @@
-[bandit]
-exclude = ids/management/commands/initdb.py

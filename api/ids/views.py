@@ -4,21 +4,21 @@ API эндпоинты для дампов.
 
 import logging
 
+from drf_spectacular.utils import extend_schema
+from ids.models import (Dump, HandledPacket)
 from ids.serializers import *
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from rest_framework import status
-from ids.models import Dump, HandledPacket
 from ids.serializers import (
     DumpCreateSerializer,
     DumpUpdateSerializer,
     HandledPacketSerializer,
 )
-from rest_framework.parsers import MultiPartParser
-from drf_spectacular.utils import extend_schema
 from ids.tasks import process_dump_file
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.generics import (ListCreateAPIView, RetrieveUpdateDestroyAPIView)
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.parsers import MultiPartParser
+from rest_framework.response import Response
 
 logger = logging.getLogger(__name__)
 
@@ -96,7 +96,7 @@ class HandledPacketDetailUpdateDelete(RetrieveUpdateDestroyAPIView):
     page_size = 25
     http_method_names = ["get"]
 
-    def get(self, request, pk=None):
+    def get(self, request, pk=None):  # pylint: disable=unused-argument
         """
         Получаем список обработанных пакетов из дампа по ID дампа.
         :param request: Объект HTTP-запроса.

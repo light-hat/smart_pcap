@@ -3,6 +3,7 @@
 """
 
 import os
+
 from celery import Celery
 
 # from prometheus_client import Counter
