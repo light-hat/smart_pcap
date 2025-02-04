@@ -1,3 +1,7 @@
+"""
+Асинхронные Celery-таски для обработки дампов памяти.
+"""
+
 from celery import shared_task
 from ids.models import Dump, HandledPacket
 from scapy.all import *

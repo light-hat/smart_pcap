@@ -1,3 +1,7 @@
+"""
+Сериализаторы для моделей БД.
+"""
+
 from rest_framework import serializers
 from ids.models import Dump, HandledPacket
 
@@ -8,6 +12,7 @@ class DumpCreateSerializer(serializers.ModelSerializer):
     """
 
     class Meta:
+        """Метаданные сериализатора."""
         model = Dump
         fields = ("id", "name", "details", "source")
         read_only_fields = ("state",)
@@ -19,6 +24,7 @@ class DumpUpdateSerializer(serializers.ModelSerializer):
     """
 
     class Meta:
+        """Метаданные сериализатора."""
         model = Dump
         fields = ("id", "name", "details")
         read_only_fields = ("state",)
@@ -30,6 +36,7 @@ class HandledPacketSerializer(serializers.ModelSerializer):
     """
 
     class Meta:
+        """Метаданные сериализатора."""
         model = HandledPacket
         fields = (
             "id",

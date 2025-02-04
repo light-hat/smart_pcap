@@ -2,7 +2,7 @@
 Маршруты для пользовательской версии REST API.
 """
 
-from uuid import uuid4
+# from uuid import uuid4
 from django.urls import path
 
 # from django.views.decorators.csrf import csrf_exempt
