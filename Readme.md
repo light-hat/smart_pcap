@@ -93,27 +93,12 @@ The model has 24 output classes:
 
 ## Requirements
 
-### Hardware environment
-
-| Requirement | Minimum        | Recommended  |
-|-------------|----------------|--------------|
-| CPU         | `6 cores`      | `12 cores`   |
-| RAM         | `16 GB`        | `32 GB`      |
-| Disk        | `80 GB`        | `150 GB`     |
-| GPU         | `8-16 GB VRAM` | `32 GB VRAM` |
-
-### Software environment
-
-> [!TIP]
-> The operating system, in principle, does not matter if the requirements for the software and hardware environment are met.
-
-| Requirement              | Minimum version     | Recommended version            |
-|--------------------------|---------------------|--------------------------------|
-| Docker                   | `19.03`             | `20.10 or higher`              |
-| Docker Compose           | `1.27`              | `1.29 or higher`               |
-| NVIDIA drivers           | `418.87`            | `latest stable version`        |
-| CUDA                     | `11.0`              | `latest stable version`        |
-| NVIDIA Container Toolkit | `1.0`               | `latest stable version`        |
+| Requirement | Value        |
+|-------------|--------------|
+| CPU         | `4 cores`    |
+| RAM         | `32 GB`      |
+| Disk        | `150 GB`     |
+| GPU         | `16 GB VRAM` |
 
 ## Deployment
 

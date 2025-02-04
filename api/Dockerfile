@@ -8,9 +8,7 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /home/app/web
 
-COPY requirements.txt .
-
-RUN pip install -r requirements.txt
+RUN pip install Django djangorestframework djangorestframework-simplejwt drf-spectacular gunicorn psycopg2-binary Celery redis scapy torch tritonclient[http] numpy transformers django-prometheus prometheus-client
 
 COPY . .
 
