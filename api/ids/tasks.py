@@ -47,9 +47,7 @@ ID2LABEL = {
 
 
 def processing_packet_conversion(
-    packet: Union[scapy.packet.Packet, scapy.layers.l2.Ether],
-    ip: str,
-    tcp: str
+    packet: Union[scapy.packet.Packet, scapy.layers.l2.Ether]
 ) -> str:
     """
     Преобразование сетевого пакета, который мы извлекли из
@@ -66,9 +64,6 @@ def processing_packet_conversion(
         if not layer.payload:
             break
         packet_2 = layer.payload
-
-    IP = ip
-    TCP = tcp
 
     # Extract relevant information for feature creation.
     src_ip = packet[IP].src
@@ -212,7 +207,7 @@ def process_dump_file(dump_id: str) -> None:
         with PcapReader(dump_file) as pcap:
             for pkt in pcap:
                 if IP in pkt and TCP in pkt:  # IPv4 and TCP
-                    packet_data = processing_packet_conversion(pkt, IP, TCP)
+                    packet_data = processing_packet_conversion(pkt)
                     if packet_data:
                         packet_ml_label = infer_packet_data(packet_data["final_data"])
                         packet_object = HandledPacket.objects.create(
