@@ -7,14 +7,15 @@
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 </p>
 
+![Alt](https://repobeats.axiom.co/api/embed/86a17b1aa2bcd2cc76f8195775f83884a84e3b2b.svg "Repobeats analytics image")
+
 <p align="center">
 Веб-сервис, который выявляет сетевые атаки методами ML. В проекте реализуется инференс с аппаратным ускорением на GPU, асинхронная обработка PCAP-дампов сетевого трафика, гибкий поиск по результатам обработки, мониторинг веб-сервиса и интеграцию с SIEM-системами (в будущем).
 </p>
 
 <p align="center">
-<i>Read this in other languages: </i> 
-<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.md">English</a>,
-Русский.
+<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.md">English</a> |
+Русский
 </p>
 
 <h2 align="center"> Стек </h2>
