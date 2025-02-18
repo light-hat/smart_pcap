@@ -8,6 +8,8 @@
 <a href="https://app.fossa.com/projects/git%2Bgithub.com%2Flight-hat%2Fsmart_ids?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Flight-hat%2Fsmart_ids.svg?type=shield"/></a>
 </p>
 
+![Alt](https://repobeats.axiom.co/api/embed/86a17b1aa2bcd2cc76f8195775f83884a84e3b2b.svg "Repobeats analytics image")
+
 <p align="center">
 A web service that detects network attacks using ML methods. The project implements GPU-accelerated inference, asynchronous processing of PCAP dumps of network traffic, flexible search based on processing results, web service monitoring and integration with SIEM systems (in the future).
 </p>
@@ -59,6 +61,8 @@ English,
 The [rdpahalavan/bert-network-packet-flow-header-payload](https://huggingface.co/rdpahalavan/bert-network-packet-flow-header-payload) ML model was used to detect attacks.
 
 A Jupyter Notebook with model details is [here](https://github.com/TPs-ESIR-S9/PcapFileAnalysis/blob/main/NetworkPcapAnalysis.ipynb).
+
+PCAP samples are [here](https://github.com/TPs-ESIR-S9/PcapFileAnalysis/tree/main/PcapSamples).
 
 The model has 24 output classes:
 
@@ -449,6 +453,9 @@ First login credentials: `admin:admin`.
 
 > [!IMPORTANT]
 > It is recommended to change the credentials immediately after deployment to more stable ones.
+
+### Monitoring
+
 
 
 ## License

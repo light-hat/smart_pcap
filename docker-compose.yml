@@ -141,13 +141,14 @@ services:
 
   prometheus:
     image: prom/prometheus:latest
-    volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     expose:
       - 9090
     restart: always
     networks:
       - backend
+    volumes:
+      - ./prometheus:/etc/prometheus
+    command: --config.file=/etc/prometheus/prometheus.yaml
     deploy:
       resources:
         limits:
