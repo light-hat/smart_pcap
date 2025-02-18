@@ -10,17 +10,6 @@
 ![Alt](https://repobeats.axiom.co/api/embed/86a17b1aa2bcd2cc76f8195775f83884a84e3b2b.svg "Repobeats analytics image")
 
 <p align="center">
-Веб-сервис, который выявляет сетевые атаки методами ML. В проекте реализуется инференс с аппаратным ускорением на GPU, асинхронная обработка PCAP-дампов сетевого трафика, гибкий поиск по результатам обработки, мониторинг веб-сервиса и интеграцию с SIEM-системами (в будущем).
-</p>
-
-<p align="center">
-<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.md">English</a> |
-Русский
-</p>
-
-<h2 align="center"> Стек </h2>
-
-<p align="center">
 
 <img src="https://img.shields.io/badge/nVIDIA-%2376B900.svg?style=for-the-badge&logo=nVIDIA&logoColor=white">
 <img src="https://img.shields.io/badge/cuda-000000.svg?style=for-the-badge&logo=nVIDIA&logoColor=green">
@@ -36,6 +25,15 @@
 <img src="https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white">
 <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white">
 
+</p>
+
+<p align="center">
+Веб-сервис, который выявляет сетевые атаки методами ML. В проекте реализуется инференс с аппаратным ускорением на GPU, асинхронная обработка PCAP-дампов сетевого трафика, гибкий поиск по результатам обработки, мониторинг веб-сервиса и интеграцию с SIEM-системами (в будущем).
+</p>
+
+<p align="center">
+<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.md">English</a> |
+Русский
 </p>
 
 ## Содержание

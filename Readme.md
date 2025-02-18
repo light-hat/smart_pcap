@@ -11,17 +11,6 @@
 ![Alt](https://repobeats.axiom.co/api/embed/86a17b1aa2bcd2cc76f8195775f83884a84e3b2b.svg "Repobeats analytics image")
 
 <p align="center">
-A web service that detects network attacks using ML methods. The project implements GPU-accelerated inference, asynchronous processing of PCAP dumps of network traffic, flexible search based on processing results, web service monitoring and integration with SIEM systems (in the future).
-</p>
-
-<p align="center">
-English |
-<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.ru.md">Русский</a>
-</p>
-
-<h2 align="center"> Tech stack </h2>
-
-<p align="center">
 
 <img src="https://img.shields.io/badge/nVIDIA-%2376B900.svg?style=for-the-badge&logo=nVIDIA&logoColor=white">
 <img src="https://img.shields.io/badge/cuda-000000.svg?style=for-the-badge&logo=nVIDIA&logoColor=green">
@@ -37,6 +26,15 @@ English |
 <img src="https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white">
 <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white">
 
+</p>
+
+<p align="center">
+A web service that detects network attacks using ML methods. The project implements GPU-accelerated inference, asynchronous processing of PCAP dumps of network traffic, flexible search based on processing results, web service monitoring and integration with SIEM systems (in the future).
+</p>
+
+<p align="center">
+English |
+<a href="https://github.com/light-hat/smart_ids/blob/master/Readme.ru.md">Русский</a>
 </p>
 
 ## Contents
