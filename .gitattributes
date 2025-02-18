@@ -1,0 +1,10 @@
+*.html linguist-vendored
+*.css linguist-vendored
+*.scss linguist-vendored
+*.ps1 eol=crlf linguist-vendored
+*.sh eol=lf linguist-vendored
+*.js eol=lf
+*.vue eol=lf
+*.cjs eol=lf
+Makefile linguist-vendored
+Dockerfile linguist-vendored

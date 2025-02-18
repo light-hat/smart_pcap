@@ -4,7 +4,7 @@
 
 import os
 from datetime import datetime
-from typing import Union
+from typing import (Union, Tuple)
 
 import numpy as np
 import tritonclient.http as httpclient
@@ -52,8 +52,6 @@ def processing_packet_conversion(
     """
     Преобразование сетевого пакета, который мы извлекли из
     дампа, в строковое представление.
-    :param packet: Объект сетевого пакета, который нужно обработать.
-    :return: Строка с извлеченными характеристиками сетевого пакета.
     """
     # Clone the packet for processing without modifying the original.
     packet_2 = packet

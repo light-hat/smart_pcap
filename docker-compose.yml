@@ -1,31 +1,31 @@
 version: '3'
 
 services:
-#  triton:
-#    build:
-#      context: ./triton
-#      dockerfile: Dockerfile
-#      target: triton_server
-#    restart: always
-#    networks:
-#      - backend
-#    expose:
-#      - 8000
-#      - 8001
-#      - 8002
-#    deploy:
-#      resources:
-#        limits:
-#          memory: "4g"
-#          cpus: "2.0"
-#        reservations:
-#          memory: "2g"
-#          cpus: "1.0"
-#          devices:
-#            - driver: nvidia
-#              count: all
-#              capabilities: [ gpu ]
-#    command: ["tritonserver", "--model-repository=/models/"]
+  triton:
+    build:
+      context: ./triton
+      dockerfile: Dockerfile
+      target: triton_server
+    restart: always
+    networks:
+      - backend
+    expose:
+      - 8000
+      - 8001
+      - 8002
+    deploy:
+      resources:
+        limits:
+          memory: "4g"
+          cpus: "2.0"
+        reservations:
+          memory: "2g"
+          cpus: "1.0"
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
+    command: ["tritonserver", "--model-repository=/models/"]
 
   db:
     image: postgres:15-alpine
@@ -38,8 +38,8 @@ services:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
       - POSTGRES_DB
-#    depends_on:
-#      - triton
+    depends_on:
+      - triton
     restart: always
     networks:
       - backend
@@ -141,13 +141,14 @@ services:
 
   prometheus:
     image: prom/prometheus:latest
-    volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     expose:
       - 9090
     restart: always
     networks:
       - backend
+    volumes:
+      - ./prometheus:/etc/prometheus
+    command: --config.file=/etc/prometheus/prometheus.yaml
     deploy:
       resources:
         limits:
