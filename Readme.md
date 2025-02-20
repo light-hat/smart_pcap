@@ -119,8 +119,11 @@ First login credentials: `admin:admin`.
 
 ### Tasks monitoring
 
-...
+Monitoring Celery tasks with Flower: `http://127.0.0.1:5555/`.
 
+### SIEM integration (Wazuh)
+
+To be continued...
 
 ## Deployment
 
