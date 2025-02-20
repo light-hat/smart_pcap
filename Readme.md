@@ -98,7 +98,7 @@ The model has 24 output classes:
 | GPU         | `16 GB VRAM` |
 
 
-## Operation
+## Usage
 
 ### API Documentation
 
