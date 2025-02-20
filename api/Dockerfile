@@ -25,3 +25,9 @@ FROM base AS worker
 RUN python manage.py collectstatic --noinput
 
 CMD ["celery", "-A", "config", "worker", "--loglevel=info"]
+
+FROM base AS flower
+
+RUN pip install flower
+
+CMD ["celery", "-A", "config", "flower", "--port=5555"]

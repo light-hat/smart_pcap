@@ -139,48 +139,36 @@ services:
           cpus: "0.5"
           memory: "512M"
 
-  prometheus:
-    image: prom/prometheus:latest
-    expose:
-      - 9090
-    restart: always
-    networks:
-      - backend
-    volumes:
-      - ./prometheus:/etc/prometheus
-    command: --config.file=/etc/prometheus/prometheus.yaml
-    deploy:
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: "512M"
-        reservations:
-          cpus: "0.25"
-          memory: "256M"
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - 3000:3000
-    depends_on:
-      - prometheus
+  flower:
+    image: smart-ids-flower:latest
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      target: flower
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD
-      - GF_SECURITY_ADMIN_USER
-    volumes:
-      - grafana-data:/var/lib/grafana
+      - API_URL
+      - API_PORT
+      - POSTGRES_HOST
+      - POSTGRES_PORT
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
     restart: always
     networks:
-      - frontend
       - backend
+    ports:
+      - "5555:5555"
+    depends_on:
+      - redis
+      - worker
     deploy:
       resources:
         limits:
+          cpus: "1.0"
+          memory: "1024M"
+        reservations:
           cpus: "0.5"
           memory: "512M"
-        reservations:
-          cpus: "0.25"
-          memory: "256M"
 
   nginx:
     image: smart-ids-router:latest
@@ -193,7 +181,6 @@ services:
       - ${API_PORT}:80
     depends_on:
       - api
-      - grafana
     restart: always
     networks:
       - frontend
