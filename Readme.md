@@ -21,8 +21,6 @@
 <img src="https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white">
 <img src="https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white">
 <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white">
-<img src="https://img.shields.io/badge/grafana-%23F46800.svg?style=for-the-badge&logo=grafana&logoColor=white">
-<img src="https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=Prometheus&logoColor=white">
 <img src="https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white">
 <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white">
 
@@ -98,6 +96,31 @@ The model has 24 output classes:
 | RAM         | `32 GB`      |
 | Disk        | `150 GB`     |
 | GPU         | `16 GB VRAM` |
+
+
+## Operation
+
+### API Documentation
+
+API documented using Swagger (`drf-spectacular`).
+
+API testing: `http://127.0.0.1/api/docs/`
+
+YAML: `http://127.0.0.1/api/schema/`
+
+### Admin panel
+
+The service admin area is available at `http://127.0.0.1/admin`.
+
+First login credentials: `admin:admin`.
+
+> [!IMPORTANT]
+> It is recommended to change the credentials immediately after deployment to more stable ones.
+
+### Tasks monitoring
+
+...
+
 
 ## Deployment
 
@@ -250,9 +273,9 @@ Environment variables in the configuration:
 
 - `POSTGRES_DB`: name of the database used by the service;
 
-- `FLOWER_ADMIN_PASSWORD`: username for authorization in Grafana;
+- `FLOWER_ADMIN_USER`: username for authorization in Flower;
 
-- `FLOWER_ADMIN_USER`: password for authorization in Grafana;
+- `FLOWER_ADMIN_PASSWORD`: password for authorization in Flower.
 
 You can do this automatically via a script:
 
@@ -432,28 +455,6 @@ worker-1  |   . ids.tasks.process_dump_file
 
 </details>
 
-## Operation
-
-### API Documentation
-
-API documented using Swagger (`drf-spectacular`).
-
-API testing: `http://127.0.0.1/api/docs/`
-
-YAML: `http://127.0.0.1/api/schema/`
-
-### Admin panel
-
-The service admin area is available at `http://127.0.0.1/admin`.
-
-First login credentials: `admin:admin`.
-
-> [!IMPORTANT]
-> It is recommended to change the credentials immediately after deployment to more stable ones.
-
-### Monitoring
-
-
-
 ## License
+
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flight-hat%2Fsmart_ids.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Flight-hat%2Fsmart_ids?ref=badge_large)

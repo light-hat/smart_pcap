@@ -20,8 +20,6 @@
 <img src="https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white">
 <img src="https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white">
 <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white">
-<img src="https://img.shields.io/badge/grafana-%23F46800.svg?style=for-the-badge&logo=grafana&logoColor=white">
-<img src="https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=Prometheus&logoColor=white">
 <img src="https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white">
 <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white">
 
@@ -94,6 +92,29 @@
 | RAM         | `32 Гб`      |
 | Disk        | `150 Гб`     |
 | GPU         | `16 Гб VRAM` |
+
+## Эксплуатация
+
+### Документация API
+
+API задокументирован при помощи Swagger (`drf-spectacular`).
+
+Тестирование API: `http://127.0.0.1/api/docs/`
+
+YAML: `http://127.0.0.1/api/schema/`
+
+### Административная панель
+
+Админка сервиса доступна по адресу `http://127.0.0.1/admin`.
+
+Учётные данные для первого входа: `admin:admin`.
+
+> [!IMPORTANT]
+> Учётные данные рекомендуется сменить сразу после развёртывания на более устойчивые.
+
+### Мониторинг очереди задач
+
+...
 
 ## Развёртывание
 
@@ -246,9 +267,9 @@ FLOWER_ADMIN_USER=admin
 
 - `POSTGRES_DB`: имя базы данных, используемой сервисом;
 
-- `FLOWER_ADMIN_PASSWORD`: имя пользователя для авторизации в Grafana;
+- `FLOWER_ADMIN_PASSWORD`: имя пользователя для авторизации в Flower;
 
-- `FLOWER_ADMIN_USER`: пароль для авторизации в Grafana.
+- `FLOWER_ADMIN_USER`: пароль для авторизации в Flower.
 
 Можете сделать это автоматически через скрипт:
 
@@ -427,22 +448,3 @@ worker-1  |   . ids.tasks.process_dump_file
 <hr />
 
 </details>
-
-## Эксплуатация
-
-### Документация API
-
-API задокументирован при помощи Swagger (`drf-spectacular`).
-
-Тестирование API: `http://127.0.0.1/api/docs/`
-
-YAML: `http://127.0.0.1/api/schema/`
-
-### Административная панель
-
-Админка сервиса доступна по адресу `http://127.0.0.1/admin`.
-
-Учётные данные для первого входа: `admin:admin`.
-
-> [!IMPORTANT]
-> Учётные данные рекомендуется сменить сразу после развёртывания на более устойчивые.
