@@ -145,6 +145,7 @@ services:
       context: ./api
       dockerfile: Dockerfile
       target: flower
+    command: celery -A config flower --port=5555 --basic-auth=$FLOWER_ADMIN_USER:$FLOWER_ADMIN_PASSWORD
     environment:
       - API_URL
       - API_PORT

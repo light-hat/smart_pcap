@@ -12,8 +12,8 @@ postgres_port=$(read_value "POSTGRES PORT")
 postgres_user=$(read_value "POSTGRES USER")
 postgres_password=$(read_value "POSTGRES PASSWORD")
 postgres_db=$(read_value "POSTGRES DB")
-gf_security_admin_password=$(read_value "GF SECURITY ADMIN PASSWORD")
-gf_security_admin_user=$(read_value "GF SECURITY ADMIN USER")
+FLOWER_ADMIN_USER=$(read_value "FLOWER ADMIN USER")
+FLOWER_ADMIN_PASSWORD=$(read_value "FLOWER ADMIN PASSWORD")
 
 content="API_URL=${api_url}
 API_PORT=${api_port}
@@ -22,8 +22,8 @@ POSTGRES_PORT=${postgres_port}
 POSTGRES_USER=${postgres_user}
 POSTGRES_PASSWORD=${postgres_password}
 POSTGRES_DB=${postgres_db}
-GF_SECURITY_ADMIN_PASSWORD=${gf_security_admin_password}
-GF_SECURITY_ADMIN_USER=${gf_security_admin_user}"
+FLOWER_ADMIN_USER=${FLOWER_ADMIN_USER}
+FLOWER_ADMIN_PASSWORD=${FLOWER_ADMIN_PASSWORD}"
 
 echo "$content" > .env
 

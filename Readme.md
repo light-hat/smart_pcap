@@ -230,8 +230,8 @@ POSTGRES_PORT=5432
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 POSTGRES_DB=shop_database
-GF_SECURITY_ADMIN_PASSWORD=admin
-GF_SECURITY_ADMIN_USER=admin
+FLOWER_ADMIN_PASSWORD=admin
+FLOWER_ADMIN_USER=admin
 ```
 
 Environment variables in the configuration:
@@ -250,9 +250,9 @@ Environment variables in the configuration:
 
 - `POSTGRES_DB`: name of the database used by the service;
 
-- `GF_SECURITY_ADMIN_PASSWORD`: username for authorization in Grafana;
+- `FLOWER_ADMIN_PASSWORD`: username for authorization in Grafana;
 
-- `GF_SECURITY_ADMIN_USER`: password for authorization in Grafana;
+- `FLOWER_ADMIN_USER`: password for authorization in Grafana;
 
 You can do this automatically via a script:
 

@@ -226,8 +226,8 @@ POSTGRES_PORT=5432
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 POSTGRES_DB=shop_database
-GF_SECURITY_ADMIN_PASSWORD=admin
-GF_SECURITY_ADMIN_USER=admin
+FLOWER_ADMIN_PASSWORD=admin
+FLOWER_ADMIN_USER=admin
 ```
 
 Переменные окружения в конфигурации:
@@ -246,9 +246,9 @@ GF_SECURITY_ADMIN_USER=admin
 
 - `POSTGRES_DB`: имя базы данных, используемой сервисом;
 
-- `GF_SECURITY_ADMIN_PASSWORD`: имя пользователя для авторизации в Grafana;
+- `FLOWER_ADMIN_PASSWORD`: имя пользователя для авторизации в Grafana;
 
-- `GF_SECURITY_ADMIN_USER`: пароль для авторизации в Grafana.
+- `FLOWER_ADMIN_USER`: пароль для авторизации в Grafana.
 
 Можете сделать это автоматически через скрипт:
 
