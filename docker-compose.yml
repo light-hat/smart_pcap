@@ -171,6 +171,30 @@ services:
           cpus: "0.5"
           memory: "512M"
 
+  opensearch:
+    image: opensearchproject/opensearch:latest
+    environment:
+      - discovery.type=single-node
+    expose:
+      - 9200
+      - 9600
+    restart: always
+    networks:
+      - backend
+    depends_on:
+      - redis
+      - worker
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "2048M"
+        reservations:
+          cpus: "0.5"
+          memory: "512M"
+
   nginx:
     image: smart-ids-router:latest
     build: ./nginx/
@@ -195,6 +219,7 @@ services:
           memory: "128M"
 
 volumes:
+  opensearch-data:
   grafana-data:
   postgres_data:
   static_volume:

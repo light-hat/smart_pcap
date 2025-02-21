@@ -10,6 +10,8 @@ WORKDIR /home/app/web
 
 RUN pip install Django djangorestframework djangorestframework-simplejwt drf-spectacular gunicorn psycopg2-binary Celery redis scapy torch tritonclient[http] numpy transformers django-prometheus prometheus-client
 
+RUN pip install opensearch-py
+
 COPY . .
 
 FROM base AS app

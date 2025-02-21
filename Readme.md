@@ -27,7 +27,7 @@
 </p>
 
 <p align="center">
-A web service that detects network attacks using ML methods. The project implements GPU-accelerated inference, asynchronous processing of PCAP dumps of network traffic, flexible search based on processing results, web service monitoring and integration with SIEM systems (in the future).
+A web service that detects network attacks using ML methods. The project implements GPU-accelerated inference, asynchronous processing of PCAP dumps of network traffic and flexible search based on processing results.
 </p>
 
 <p align="center">
@@ -120,10 +120,6 @@ First login credentials: `admin:admin`.
 ### Tasks monitoring
 
 Monitoring Celery tasks with Flower: `http://127.0.0.1:5555/`.
-
-### SIEM integration (Wazuh)
-
-To be continued...
 
 ## Deployment
 
@@ -280,10 +276,10 @@ Environment variables in the configuration:
 
 - `FLOWER_ADMIN_PASSWORD`: password for authorization in Flower.
 
-You can do this automatically via a script:
+You can do this automatically:
 
 ```shell
-./configure.sh
+make config
 ```
 
 ### Run
@@ -291,7 +287,7 @@ You can do this automatically via a script:
 Start the application stack on Docker with the following command:
 
 ```shell
-docker-compose up -d --build
+sudo make build
 ```
 
 <details>
