@@ -71,6 +71,36 @@ services:
           cpus: "0.1"
           memory: "128M"
 
+  opensearch:
+    image: opensearchproject/opensearch:latest
+    environment:
+      - discovery.type=single-node
+      - OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_ADMIN_PASS}
+    expose:
+      - 9200
+      - 9600
+    restart: always
+    networks:
+      - backend
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+    ulimits:
+      memlock:
+        soft: -1 # Set memlock to unlimited (no soft or hard limit)
+        hard: -1
+      nofile:
+        soft: 65536 # Maximum number of open files for the opensearch user - set to at least 65536
+        hard: 65536
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "2048M"
+        reservations:
+          cpus: "0.5"
+          memory: "512M"
+
   api:
     image: smart-ids:latest
     build:
@@ -90,9 +120,11 @@ services:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
       - POSTGRES_DB
+      - OPENSEARCH_ADMIN_PASS
     depends_on:
       - db
       - redis
+      - opensearch
     restart: always
     networks:
       - frontend
@@ -123,6 +155,7 @@ services:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
       - POSTGRES_DB
+      - OPENSEARCH_ADMIN_PASS
     depends_on:
       - db
       - redis
@@ -154,8 +187,10 @@ services:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
       - POSTGRES_DB
+      - OPENSEARCH_ADMIN_PASS
     restart: always
     networks:
+      - frontend
       - backend
     ports:
       - "5555:5555"
@@ -195,6 +230,7 @@ services:
           memory: "128M"
 
 volumes:
+  opensearch-data:
   grafana-data:
   postgres_data:
   static_volume:

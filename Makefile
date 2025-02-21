@@ -7,6 +7,10 @@ black:
 lint:
 	pylint --load-plugins pylint_django .
 
+config:
+	chmod +x configure.sh
+	./configure.sh
+
 sast:
 	cd api
 	bandit -r .
