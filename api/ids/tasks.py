@@ -4,7 +4,7 @@
 
 import os
 from datetime import datetime
-from typing import (Union, Tuple)
+from typing import Tuple, Union
 
 import numpy as np
 import tritonclient.http as httpclient

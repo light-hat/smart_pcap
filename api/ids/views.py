@@ -13,7 +13,7 @@ from ids.serializers import (
     HandledPacketSerializer,
 )
 from ids.tasks import process_dump_file
-from rest_framework.generics import (ListCreateAPIView, RetrieveUpdateDestroyAPIView)
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response

@@ -4,6 +4,7 @@
 
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
+from ids.search_indexes import create_handled_packet_index
 
 
 class Command(BaseCommand):
@@ -20,3 +21,5 @@ class Command(BaseCommand):
 
         except User.DoesNotExist:
             User.objects.create_superuser(username="admin", password="admin")
+
+        create_handled_packet_index()
