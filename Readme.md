@@ -1,4 +1,4 @@
-<h1 align="center"> Smart IDS </h1>
+<h1 align="center"> Smart PCAP </h1>
 
 <p align="center">
 <a href="https://github.com/light-hat/smart_ids/actions"><img alt="Unit test status" src="https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat&logo=python&logoColor=white"></a>
@@ -27,7 +27,7 @@
 </p>
 
 <p align="center">
-A web service that detects network attacks using ML methods. The project implements GPU-accelerated inference, asynchronous processing of PCAP dumps of network traffic and flexible search based on processing results.
+Web service for analyzing network traffic dumps (PCAP) with RAG. Detection of attacks through signature methods, integration with Threat Intelligence systems and AI.
 </p>
 
 <p align="center">
