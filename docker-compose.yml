@@ -52,25 +52,6 @@ services:
           cpus: "0.25"
           memory: "256M"
 
-  redis:
-    image: redis:7.0.15
-    container_name: redis
-    expose:
-      - 6379
-    volumes:
-      - redis-data:/data
-    restart: always
-    networks:
-      - backend
-    deploy:
-      resources:
-        limits:
-          cpus: "0.25"
-          memory: "256M"
-        reservations:
-          cpus: "0.1"
-          memory: "128M"
-
   opensearch:
     image: opensearchproject/opensearch:latest
     environment:
@@ -101,6 +82,131 @@ services:
           cpus: "0.5"
           memory: "512M"
 
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.2.15
+    hostname: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  broker-1:
+    image: confluentinc/cp-kafka:7.2.15
+    hostname: broker-1
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_BROKER_RACK: rack-a
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ADVERTISED_HOST_NAME: ${DOCKER_HOST_IP}
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://${DOCKER_HOST_IP}:9092'
+      KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+      KAFKA_JMX_PORT: 9999
+      KAFKA_JMX_HOSTNAME: 'broker-1'
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: broker-1:9092
+      CONFLUENT_METRICS_REPORTER_ZOOKEEPER_CONNECT: zookeeper:2181
+      CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
+      CONFLUENT_METRICS_ENABLE: 'true'
+      CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
+
+  schema_registry:
+    image: confluentinc/cp-schema-registry:7.2.15
+    hostname: schema_registry
+    container_name: schema_registry
+    depends_on:
+      - zookeeper
+      - broker-1
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema_registry
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
+      SCHEMA_REGISTRY_ACCESS_CONTROL_ALLOW_ORIGIN: '*'
+      SCHEMA_REGISTRY_ACCESS_CONTROL_ALLOW_METHODS: 'GET,POST,PUT,OPTIONS'
+
+  connect:
+    image: confluentinc/cp-kafka-connect:7.2.15
+    hostname: connect
+    container_name: connect
+    depends_on:
+      - zookeeper
+      - broker-1
+      - schema_registry
+    ports:
+      - "8083:8083"
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: 'broker-1:9092'
+      CONNECT_REST_ADVERTISED_HOST_NAME: connect
+      CONNECT_REST_PORT: 8083
+      CONNECT_GROUP_ID: compose-connect-group
+      CONNECT_CONFIG_STORAGE_TOPIC: docker-connect-configs
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_OFFSET_STORAGE_TOPIC: docker-connect-offsets
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_STATUS_STORAGE_TOPIC: docker-connect-status
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_KEY_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schema_registry:8081'
+      CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schema_registry:8081'
+      CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+    volumes:
+      - ./kafka-connect:/etc/kafka-connect/jars
+
+  rest-proxy:
+    image: confluentinc/cp-kafka-rest
+    hostname: rest-proxy
+    depends_on:
+      - broker-1
+      - schema_registry
+    ports:
+      - "8084:8084"
+    environment:
+      KAFKA_REST_ZOOKEEPER_CONNECT: '${DOCKER_HOST_IP}:2181'
+      KAFKA_REST_LISTENERS: 'http://0.0.0.0:8084'
+      KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema_registry:8081'
+      KAFKA_REST_HOST_NAME: 'rest-proxy'
+
+  kafka-manager:
+    image: trivadisbds/kafka-manager
+    hostname: kafka-manager
+    depends_on:
+      - zookeeper
+    ports:
+      - "9000:9000"
+    environment:
+      ZK_HOSTS: 'zookeeper:2181'
+      APPLICATION_SECRET: 'letmein'   
+
+  connect-ui:
+    image: landoop/kafka-connect-ui
+    container_name: connect-ui
+    depends_on:
+      - connect
+    ports:
+      - "8001:8000"
+    environment:
+      - "CONNECT_URL=http://connect:8083"
+
+  schema-registry-ui:
+    image: landoop/schema-registry-ui
+    hostname: schema-registry-ui
+    depends_on:
+      - broker-1
+      - schema_registry
+    ports:
+      - "8002:8000"
+    environment:
+      SCHEMAREGISTRY_URL: 'http://${DOCKER_HOST_IP}:8081'
+
   api:
     image: smart-ids:latest
     build:
@@ -129,74 +235,6 @@ services:
     networks:
       - frontend
       - backend
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: "1024M"
-        reservations:
-          cpus: "0.5"
-          memory: "512M"
-
-  worker:
-    image: smart-ids-worker:latest
-    build:
-      context: ./api
-      dockerfile: Dockerfile
-      target: worker
-    volumes:
-      - static_volume:/home/app/web/static
-      - media_volume:/home/app/web/media
-    environment:
-      - API_URL
-      - API_PORT
-      - POSTGRES_HOST
-      - POSTGRES_PORT
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
-      - POSTGRES_DB
-      - OPENSEARCH_ADMIN_PASS
-    depends_on:
-      - db
-      - redis
-      - api
-    restart: always
-    networks:
-      - backend
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: "1024M"
-        reservations:
-          cpus: "0.5"
-          memory: "512M"
-
-  flower:
-    image: smart-ids-flower:latest
-    build:
-      context: ./api
-      dockerfile: Dockerfile
-      target: flower
-    command: celery -A config flower --port=5555 --basic-auth=$FLOWER_ADMIN_USER:$FLOWER_ADMIN_PASSWORD
-    environment:
-      - API_URL
-      - API_PORT
-      - POSTGRES_HOST
-      - POSTGRES_PORT
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
-      - POSTGRES_DB
-      - OPENSEARCH_ADMIN_PASS
-    restart: always
-    networks:
-      - frontend
-      - backend
-    ports:
-      - "5555:5555"
-    depends_on:
-      - redis
-      - worker
     deploy:
       resources:
         limits:
