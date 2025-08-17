@@ -1,0 +1,3 @@
+This software contains third-party components:
+- scapy 2.6.1 (GPL-2.0): https://github.com/secdev/scapy
+- psycopg2-binary 2.9.10 (LGPL): https://github.com/psycopg/psycopg2

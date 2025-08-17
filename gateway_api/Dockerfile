@@ -16,7 +16,23 @@ RUN pip3 install -r requirements.txt
 
 COPY . .
 
+FROM node:18-alpine AS frontend
+
+WORKDIR /app/frontend
+
+COPY frontend/package*.json ./
+
+RUN npm install
+
+COPY frontend/ .
+
+RUN npm run build
+
 FROM base AS app
+
+RUN mkdir -p /home/app/web/frontend_dist
+
+COPY --from=frontend /app/frontend/dist /home/app/web/frontend_dist
 
 RUN chmod +x entrypoint.sh
 
