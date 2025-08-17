@@ -25,7 +25,7 @@
 </p>
 
 <p align="center">
-Web service for analyzing network traffic dumps (PCAP) with RAG. Detection of attacks through signature methods, integration with Threat Intelligence systems and AI. 
+Веб-сервис анализа дампов сетевого трафика (PCAP) с RAG. Обнаружение атак сигнатурными методами, интеграция с системами Threat Intelligence и ИИ.
 </p>
 
 <p align="center">

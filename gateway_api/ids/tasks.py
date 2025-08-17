@@ -2,10 +2,10 @@
 Асинхронные Celery-таски для обработки дампов памяти.
 """
 
-import os
+# import os
 
 from celery import shared_task
-from django.conf import settings
+# from django.conf import settings
 from ids.models import Dump
 
 @shared_task
