@@ -1,0 +1,49 @@
+name: 'Sphinx Documentation Builder and Deployer'
+description: 'Build Sphinx documentation and deploy to GitHub Pages'
+author: 'light-hat'
+
+inputs:
+  docs-dir:
+    description: 'Directory with Sphinx source files'
+    required: false
+    default: 'docs/source'
+  build-dir:
+    description: 'Directory to build documentation'
+    required: false
+    default: 'docs/build'
+  requirements:
+    description: 'Path to requirements.txt for additional dependencies'
+    required: false
+    default: ''
+  target-branch:
+    description: 'Branch to deploy GitHub Pages to'
+    required: false
+    default: 'gh-pages'
+  build-command:
+    description: 'Build command (e.g. "make html", "sphinx-build -b html source build")'
+    required: false
+    default: 'make html'
+  extra-extensions:
+    description: 'Comma-separated list of additional Sphinx extensions to install'
+    required: false
+    default: ''
+  commit-message:
+    description: 'Commit message for GitHub Pages deployment'
+    required: false
+    default: 'Deploy Sphinx documentation'
+
+outputs:
+  deploy-url:
+    description: 'URL of the deployed documentation'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.docs-dir }}
+    - ${{ inputs.build-dir }}
+    - ${{ inputs.requirements }}
+    - ${{ inputs.target-branch }}
+    - ${{ inputs.build-command }}
+    - ${{ inputs.extra-extensions }}
+    - ${{ inputs.commit-message }}
