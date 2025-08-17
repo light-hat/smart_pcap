@@ -1,4 +1,4 @@
-name: Secret detection
+name: Gitleaks
 
 on: [push]
 
