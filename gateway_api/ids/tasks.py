@@ -3,8 +3,6 @@
 """
 
 import os
-from datetime import datetime
-from typing import Tuple, Union
 
 from celery import shared_task
 from django.conf import settings
