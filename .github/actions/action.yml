@@ -1,4 +1,4 @@
-name: 'Sphinx Documentation Builder and Deployer'
+name: 'Deply docs'
 description: 'Build Sphinx documentation and deploy to GitHub Pages'
 author: 'light-hat'
 
