@@ -8,9 +8,11 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /home/app/web
 
-RUN pip install Django djangorestframework djangorestframework-simplejwt drf-spectacular gunicorn psycopg2-binary Celery redis scapy torch tritonclient[http] numpy transformers django-prometheus prometheus-client
+COPY requirements.txt .
 
-RUN pip install opensearch-py
+RUN pip3 install -r requirements.txt
+
+#RUN pip install Django Celery redis djangorestframework djangorestframework-simplejwt drf-spectacular gunicorn psycopg2-binary scapy opensearch-py confluent-kafka
 
 COPY . .
 
@@ -27,9 +29,3 @@ FROM base AS worker
 RUN python manage.py collectstatic --noinput
 
 CMD ["celery", "-A", "config", "worker", "--loglevel=info"]
-
-FROM base AS flower
-
-RUN pip install flower
-
-CMD ["celery", "-A", "config", "flower", "--port=5555"]

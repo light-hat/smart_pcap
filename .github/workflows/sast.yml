@@ -3,7 +3,7 @@ name: SAST
 on: [push]
 
 jobs:
-  build:
+  bandit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,4 +17,4 @@ jobs:
           pip install bandit
       - name: Analysing the code with pylint
         run: |
-          cd api && bandit -r .
+          bandit -r .

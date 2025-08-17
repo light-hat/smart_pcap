@@ -1,9 +1,9 @@
-name: Pylint
+name: Lint
 
 on: [push]
 
 jobs:
-  build:
+  pylint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
