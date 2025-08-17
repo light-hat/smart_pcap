@@ -22,25 +22,6 @@ services:
           cpus: "0.25"
           memory: "256M"
 
-  redis:
-    image: redis:7.0.15
-    container_name: redis
-    expose:
-      - 6379
-    volumes:
-      - redis-data:/data
-    restart: always
-    networks:
-      - backend
-    deploy:
-      resources:
-        limits:
-          cpus: "0.25"
-          memory: "256M"
-        reservations:
-          cpus: "0.1"
-          memory: "128M"
-
   opensearch:
     image: opensearchproject/opensearch:latest
     environment:
@@ -70,7 +51,7 @@ services:
         reservations:
           cpus: "0.5"
           memory: "512M"
-
+          
   worker:
     image: smart-ids-worker:latest
     build:
