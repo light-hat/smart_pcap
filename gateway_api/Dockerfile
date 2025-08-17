@@ -8,7 +8,11 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /home/app/web
 
-RUN pip install Django djangorestframework djangorestframework-simplejwt drf-spectacular gunicorn psycopg2-binary scapy opensearch-py confluent-kafka
+COPY requirements.txt .
+
+RUN pip3 install -r requirements.txt
+
+#RUN pip install Django Celery redis djangorestframework djangorestframework-simplejwt drf-spectacular gunicorn psycopg2-binary scapy opensearch-py confluent-kafka
 
 COPY . .
 
@@ -19,3 +23,9 @@ RUN chmod +x entrypoint.sh
 RUN python manage.py collectstatic --noinput
 
 ENTRYPOINT ["sh", "./entrypoint.sh"]
+
+FROM base AS worker
+
+RUN python manage.py collectstatic --noinput
+
+CMD ["celery", "-A", "config", "worker", "--loglevel=info"]
