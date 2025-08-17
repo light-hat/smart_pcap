@@ -10,7 +10,7 @@
 <a href="https://app.fossa.com/projects/git%2Bgithub.com%2Flight-hat%2Fsmart_ids?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Flight-hat%2Fsmart_ids.svg?type=shield"/></a>
 </p>
 
-![Alt](https://repobeats.axiom.co/api/embed/86a17b1aa2bcd2cc76f8195775f83884a84e3b2b.svg "Repobeats analytics image")
+![Alt](https://repobeats.axiom.co/api/embed/52a15217319122e683560982854e7950ef0dba26.svg "Repobeats analytics image")
 
 <p align="center">
 
