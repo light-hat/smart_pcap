@@ -1,32 +1,4 @@
-version: '3'
-
 services:
-  triton:
-    build:
-      context: ./triton
-      dockerfile: Dockerfile
-      target: triton_server
-    restart: always
-    networks:
-      - backend
-    expose:
-      - 8000
-      - 8001
-      - 8002
-    deploy:
-      resources:
-        limits:
-          memory: "4g"
-          cpus: "2.0"
-        reservations:
-          memory: "2g"
-          cpus: "1.0"
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [ gpu ]
-    command: ["tritonserver", "--model-repository=/models/"]
-
   db:
     image: postgres:15-alpine
     container_name: postgres
@@ -38,8 +10,6 @@ services:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
       - POSTGRES_DB
-    depends_on:
-      - triton
     restart: always
     networks:
       - backend
@@ -101,10 +71,84 @@ services:
           cpus: "0.5"
           memory: "512M"
 
-  api:
+  worker:
+    image: smart-ids-worker:latest
+    build:
+      context: ./gateway_api
+      dockerfile: Dockerfile
+      target: worker
+    volumes:
+      - static_volume:/home/app/web/static
+      - media_volume:/home/app/web/media
+    environment:
+      - API_URL
+      - API_PORT
+      - POSTGRES_HOST
+      - POSTGRES_PORT
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+      - OPENSEARCH_ADMIN_PASS
+    depends_on:
+      - db
+      - redis
+      - gateway_api
+    restart: always
+    networks:
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "1024M"
+        reservations:
+          cpus: "0.5"
+          memory: "512M"
+      
+  zoo1:
+    image: confluentinc/cp-zookeeper:7.8.0
+    hostname: zoo1
+    container_name: zoo1
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_SERVERS: zoo1:2888:3888
+    networks:
+      - backend
+
+  kafka1:
+    image: confluentinc/cp-kafka:7.8.0
+    hostname: kafka1
+    container_name: kafka1
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+      - "9999:9999"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:19092,EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092,DOCKER://host.docker.internal:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zoo1:2181"
+      KAFKA_BROKER_ID: 1
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_JMX_PORT: 9999
+      KAFKA_JMX_HOSTNAME: ${DOCKER_HOST_IP:-127.0.0.1}
+      KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+    depends_on:
+      - zoo1
+    networks:
+      - backend
+
+  gateway_api:
     image: smart-ids:latest
     build:
-      context: ./api
+      context: ./gateway_api
       dockerfile: Dockerfile
       target: app
     expose:
@@ -123,80 +167,12 @@ services:
       - OPENSEARCH_ADMIN_PASS
     depends_on:
       - db
-      - redis
       - opensearch
+      - kafka1
     restart: always
     networks:
       - frontend
       - backend
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: "1024M"
-        reservations:
-          cpus: "0.5"
-          memory: "512M"
-
-  worker:
-    image: smart-ids-worker:latest
-    build:
-      context: ./api
-      dockerfile: Dockerfile
-      target: worker
-    volumes:
-      - static_volume:/home/app/web/static
-      - media_volume:/home/app/web/media
-    environment:
-      - API_URL
-      - API_PORT
-      - POSTGRES_HOST
-      - POSTGRES_PORT
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
-      - POSTGRES_DB
-      - OPENSEARCH_ADMIN_PASS
-    depends_on:
-      - db
-      - redis
-      - api
-    restart: always
-    networks:
-      - backend
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: "1024M"
-        reservations:
-          cpus: "0.5"
-          memory: "512M"
-
-  flower:
-    image: smart-ids-flower:latest
-    build:
-      context: ./api
-      dockerfile: Dockerfile
-      target: flower
-    command: celery -A config flower --port=5555 --basic-auth=$FLOWER_ADMIN_USER:$FLOWER_ADMIN_PASSWORD
-    environment:
-      - API_URL
-      - API_PORT
-      - POSTGRES_HOST
-      - POSTGRES_PORT
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
-      - POSTGRES_DB
-      - OPENSEARCH_ADMIN_PASS
-    restart: always
-    networks:
-      - frontend
-      - backend
-    ports:
-      - "5555:5555"
-    depends_on:
-      - redis
-      - worker
     deploy:
       resources:
         limits:
@@ -216,7 +192,7 @@ services:
     ports:
       - ${API_PORT}:80
     depends_on:
-      - api
+      - gateway_api
     restart: always
     networks:
       - frontend
