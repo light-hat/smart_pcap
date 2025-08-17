@@ -1,0 +1,30 @@
+name: Deploy docs
+
+on:
+  workflow_call:
+  workflow_dispatch:
+  # push:
+  #   branches: [ master ]
+
+permissions:
+  contents: write
+
+jobs:
+  build_docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Build and Deploy Sphinx Docs
+        uses: ./.github/actions/deploy_docs
+        with:
+          docs-dir: 'docs/source'
+          build-dir: 'docs/build/html'
+          requirements: 'docs/requirements.txt'
+          target-branch: 'gh-pages'
+          build-command: 'sphinx-build -b html . ../build/html'
+          extra-extensions: 'sphinxcontrib-mermaid,sphinxcontrib-openapi'
+          commit-message: 'Deploy Sphinx Docs - ${{ github.sha }}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
