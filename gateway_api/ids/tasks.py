@@ -19,7 +19,7 @@ def process_dump_file(dump_id: str) -> None:
 
     try:
 
-        dump_file = os.path.join(str(settings.MEDIA_ROOT), str(dump.source))
+        # dump_file = os.path.join(str(settings.MEDIA_ROOT), str(dump.source))
 
         # with PcapReader(dump_file) as pcap:
         #     for pkt in pcap:

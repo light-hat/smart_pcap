@@ -1,4 +1,4 @@
-<h1 align="center"> Smart PCAP </h1>
+<h1 align="center">Smart PCAP</h1>
 
 <p align="center">
 <a href="https://github.com/light-hat/smart_ids/actions"><img alt="Python 3.12" src="https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat&logo=python&logoColor=white"></a>
