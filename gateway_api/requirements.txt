@@ -18,7 +18,7 @@ Events==0.5
 gunicorn==23.0.0
 idna==3.10
 inflection==0.5.1
-jsonschema==4.25.0
+jsonschema==4.25.1
 jsonschema-specifications==2025.4.1
 kombu==5.5.4
 opensearch-py==3.0.0
