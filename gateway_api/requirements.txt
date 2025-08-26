@@ -35,7 +35,7 @@ rpds-py==0.27.0
 scapy==2.6.1
 six==1.17.0
 sqlparse==0.5.3
-typing_extensions==4.14.1
+typing_extensions==4.15.0
 tzdata==2025.2
 uritemplate==4.2.0
 urllib3==2.5.0
