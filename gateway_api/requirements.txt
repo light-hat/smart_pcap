@@ -23,7 +23,7 @@ jsonschema-specifications==2025.4.1
 kombu==5.5.4
 opensearch-py==3.0.0
 packaging==25.0
-prompt_toolkit==3.0.51
+prompt_toolkit==3.0.52
 psycopg2-binary==2.9.10
 PyJWT==2.10.1
 python-dateutil==2.9.0.post0
