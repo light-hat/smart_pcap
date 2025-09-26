@@ -27,7 +27,7 @@ prompt_toolkit==3.0.52
 psycopg2-binary==2.9.10
 PyJWT==2.10.1
 python-dateutil==2.9.0.post0
-PyYAML==6.0.2
+PyYAML==6.0.3
 redis==6.4.0
 referencing==0.36.2
 requests==2.32.5
