@@ -3,7 +3,7 @@ asgiref==3.9.2
 attrs==25.3.0
 billiard==4.2.2
 celery==5.5.3
-certifi==2025.8.3
+certifi==2025.10.5
 charset-normalizer==3.4.3
 click==8.2.1
 click-didyoumean==0.3.1
