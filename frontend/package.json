@@ -14,7 +14,7 @@
     "pinia": "^3.0.3",
     "uikit": "^3.24.2",
     "vue": "^3.5.22",
-    "vue-router": "^4.6.0"
+    "vue-router": "^4.6.3"
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.2",
